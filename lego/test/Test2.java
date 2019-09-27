@@ -1,5 +1,5 @@
-import lejos.hardware.motor.*;
-import lejos.hardware.lcd.*;
+import lejos.hardware.motor.*; // Wildcards fører til inneffektiv kode!
+import lejos.hardware.lcd.*; // :(
 import lejos.hardware.sensor.EV3GyroSensor;
 import lejos.robotics.SampleProvider;
 import lejos.hardware.port.Port;
