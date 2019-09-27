@@ -1,7 +1,7 @@
 package lego.test;
 
-import lejos.hardware.motor.*;
-import lejos.hardware.lcd.*;
+import lejos.hardware.motor.*; // nei
+import lejos.hardware.lcd.*; // nei
 import lejos.hardware.sensor.EV3GyroSensor;
 import lejos.robotics.SampleProvider;
 import lejos.hardware.port.Port;
@@ -20,7 +20,7 @@ class Test {
         EV3GyroSensor ev3VinekelSensor = new EV3GyroSensor(vinkelPort);
         ev3VinekelSensor.reset();
         SampleProvider vinkelSensor = ev3VinekelSensor.getAngleMode();
-        
+
         int value = 0;
 
         System.out.println("Snu 180 grader");
