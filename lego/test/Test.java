@@ -25,8 +25,11 @@ class Test {
 
         System.out.println("Snu 180 grader");
         Motor.C.stop();
+
+        float[] sample;
+
         while (true) {
-            float[] sample = new float[vinkelSensor.sampleSize()];
+            sample = new float[vinkelSensor.sampleSize()];
             vinkelSensor.fetchSample(sample, 0);
             value = (int) sample[0];
 
