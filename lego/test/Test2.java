@@ -8,7 +8,7 @@ import lejos.hardware.port.SensorPort;
 import lejos.utility.Delay;
 import java.lang.Math;
 
-class Test2 {
+class Test2 { // test for å snu hvis bilen kræsjer
     public static void main(String[] args) {
 		Motor.A.setSpeed(251);
 		Motor.C.setSpeed(251);
