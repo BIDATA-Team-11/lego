@@ -21,15 +21,15 @@ public static void main (String[] args) throws Exception {
         Farge fargeKorrigering = new Farge(fargePortKorrigering);
 
         float svart = fargeSensor.kalibrering();
-        float svartKorr = fargeKorrigering.kalibrering();
+        // float hvit = fargeKorrigering.kalibrering();
         Thread.sleep(3000);
 
         float farge = 0;
         float fargeKorr = 0;
 
-        int topSpeed = 700;
-        int midSpeed = 400;
-        int minSpeed = 100;
+        int topSpeed = 200;
+        int midSpeed = 100;
+        int minSpeed = 50;
         int accTopSpeed = 6000;
         int accMinSpeed = 1000;
 
@@ -45,20 +45,34 @@ public static void main (String[] args) throws Exception {
 
             System.out.println("svart - hvit");
             if (farge > svart) {
-                if (fargeKorr > svart) {
-                    System.out.println("Hvit - Hvit");
-                } else if (fargeKorr < svart) {
-                    System.out.println("Hvit - svart");
-                }
+                bil.A.setSpeed(midSpeed);
+                bil.C.setSpeed(midSpeed);
 
                 bil.A.setAcceleration(accMinSpeed);
                 bil.C.setAcceleration(accMinSpeed);
-            } else {
-                bil.A.setSpeed(topSpeed);
-                bil.C.setSpeed(topSpeed);
 
+                // Venstre
+                if (fargeKorr > svart) {
+                    bil.A.setSpeed(minSpeed);
+                    while(farge < svart) {
+                        farge = fargeSensor.getFarge();
+                    }
+                    System.out.println("Hvit - Hvit");
+
+                    // Høyre
+                } else if (fargeKorr < svart) {
+                    bil.C.setSpeed(minSpeed);
+                    while(farge < svart) {
+                        farge = fargeSensor.getFarge();
+                    }
+                    System.out.println("Hvit - svart");
+                }
+            } else {
                 bil.A.setAcceleration(accTopSpeed);
                 bil.C.setAcceleration(accTopSpeed);
+
+                bil.A.setSpeed(topSpeed);
+                bil.C.setSpeed(topSpeed);
             }
 
             bil.A.forward();
