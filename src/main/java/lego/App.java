@@ -8,6 +8,7 @@ import lejos.robotics.SampleProvider;
 import lejos.hardware.Brick;
 import lejos.hardware.BrickFinder;
 import lejos.hardware.port.Port;
+import lejos.utility.Delay;
 
 public class App {
 public static void main (String[] args) throws Exception {
@@ -21,17 +22,23 @@ public static void main (String[] args) throws Exception {
         Farge fargeKorrigering = new Farge(fargePortKorrigering);
 
         float svart = fargeSensor.kalibrering();
-        // float hvit = fargeKorrigering.kalibrering();
+        float hvit = fargeKorrigering.kalibrering();
+        System.out.printf("%s - %s\n", svart, hvit);
         Thread.sleep(3000);
 
         float farge = 0;
         float fargeKorr = 0;
 
-        int topSpeed = 200;
-        int midSpeed = 100;
+        // int topSpeed = 600;
+        // int midSpeed = 400;
+        // int minSpeed = 50;
+        int topSpeed = 600;
+        int midSpeed = 400;
         int minSpeed = 50;
         int accTopSpeed = 6000;
-        int accMinSpeed = 1000;
+        int accMinSpeed = 3000;
+
+        int retning = 0;
 
         bil.A.setSpeed(topSpeed);
         bil.C.setSpeed(topSpeed);
@@ -43,36 +50,44 @@ public static void main (String[] args) throws Exception {
             farge = fargeSensor.getFarge();
             fargeKorr = fargeKorrigering.getFarge();
 
-            System.out.println("svart - hvit");
             if (farge > svart) {
                 bil.A.setSpeed(midSpeed);
                 bil.C.setSpeed(midSpeed);
 
-                bil.A.setAcceleration(accMinSpeed);
-                bil.C.setAcceleration(accMinSpeed);
+                // bil.A.setAcceleration(accMinSpeed);
+                // bil.C.setAcceleration(accMinSpeed);
 
-                // Venstre
-                if (fargeKorr > svart) {
-                    bil.A.setSpeed(minSpeed);
-                    while(farge < svart) {
-                        farge = fargeSensor.getFarge();
-                    }
-                    System.out.println("Hvit - Hvit");
+                if (retning == 0) {
+                    // Venstre
+                    if (fargeKorr > svart) {
+                        retning = 1;
 
-                    // Høyre
-                } else if (fargeKorr < svart) {
-                    bil.C.setSpeed(minSpeed);
-                    while(farge < svart) {
-                        farge = fargeSensor.getFarge();
+                        // Høyre
+                    } else if (fargeKorr < svart) {
+                        retning = -1;
                     }
-                    System.out.println("Hvit - svart");
+                } else  {
+                    // Venstre
+                    if (retning == 1) { 
+                        bil.A.setSpeed(minSpeed);
+                        if (fargeKorr < svart) {
+                            retning = 0;
+                        }
+
+                        // Høyre
+                    } else if (retning == -1) {
+                        bil.C.setSpeed(minSpeed);
+                    }
                 }
+
             } else {
-                bil.A.setAcceleration(accTopSpeed);
-                bil.C.setAcceleration(accTopSpeed);
+                retning = 0;
 
                 bil.A.setSpeed(topSpeed);
                 bil.C.setSpeed(topSpeed);
+
+                bil.A.setAcceleration(accTopSpeed);
+                bil.C.setAcceleration(accTopSpeed);
             }
 
             bil.A.forward();

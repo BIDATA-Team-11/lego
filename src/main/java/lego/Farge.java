@@ -1,5 +1,6 @@
 package lego;
 
+
 import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.robotics.SampleProvider;
 import lejos.hardware.port.Port;
@@ -28,6 +29,7 @@ public class Farge {
             svart += this.fargeSample[0] * 100;
         }
 
-        return (svart / 100);
+        return ((svart / 100) + 5);
+        // return (svart / 100);
     }
 }
