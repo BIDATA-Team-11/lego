@@ -8,3 +8,5 @@ jdt.ls-java-project/
 
 # Ignore Jokkes dirty hacks
 src/lejos/
+*test.java
+*.class
