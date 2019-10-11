@@ -5,3 +5,6 @@
 build
 jdt.ls-java-project/
 .metadata
+
+# Ignore Jokkes dirty hacks
+src/lejos/
