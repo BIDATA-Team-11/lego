@@ -38,7 +38,7 @@ public static void main (String[] args) throws Exception {
         int accTopSpeed = 6000;
         int accMinSpeed = 3000;
 
-        int retning = 0;
+        Retning retning;
 
         bil.A.setSpeed(topSpeed);
         bil.C.setSpeed(topSpeed);
@@ -57,7 +57,7 @@ public static void main (String[] args) throws Exception {
                 // bil.A.setAcceleration(accMinSpeed);
                 // bil.C.setAcceleration(accMinSpeed);
 
-                if (retning == 0) {
+                if (retning == Retning.FRAM) {
                     // Venstre
                     if (fargeKorr > svart) {
                         retning = 1;
@@ -68,20 +68,20 @@ public static void main (String[] args) throws Exception {
                     }
                 } else  {
                     // Venstre
-                    if (retning == 1) { 
+                    if (retning == Retning.VENSTRE) {
                         bil.A.setSpeed(minSpeed);
                         if (fargeKorr < svart) {
                             retning = 0;
                         }
 
                         // Høyre
-                    } else if (retning == -1) {
+                    } else if (retning == Retning.HØYRE) {
                         bil.C.setSpeed(minSpeed);
                     }
                 }
 
             } else {
-                retning = 0;
+                retning = Retning.FRAM;
 
                 bil.A.setSpeed(topSpeed);
                 bil.C.setSpeed(topSpeed);
