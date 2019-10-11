@@ -8,6 +8,7 @@ import lejos.robotics.SampleProvider;
 import lejos.hardware.Brick;
 import lejos.hardware.BrickFinder;
 import lejos.hardware.port.Port;
+import lejos.utility.Stopwatch;
 
 import lejos.hardware.Button;
 
@@ -25,6 +26,7 @@ public class App {
 
         boolean fortsett = false;
         float svart = 0;
+        float hvit = 0;
         // 4 = Left
         // 3 = Right
         System.out.println("Da kan du velge!");
@@ -33,10 +35,11 @@ public class App {
 
             if (knapp == Button.ID_RIGHT) {
                 svart = fargeSensor.kalibrering();
+                hvit = fargeKorrigering.kalibrering();
                 System.out.println("Ferdig kalibrert");
             } else if (knapp == Button.ID_LEFT) {
                 fortsett = true;
-                start(svart, fargeSensor, fargeKorrigering, bil);
+                start(svart, hvit, fargeSensor, fargeKorrigering, bil);
             }else if (knapp == Button.ID_UP) {
                 printFarge(fargeSensor, fargeKorrigering);
             } else if (knapp == Button.ID_DOWN) {
@@ -55,15 +58,17 @@ public class App {
         System.out.printf("%.3f - %.3f\n", farge, fargeKorr);
     }
 
-    public static void start(float svart, Farge fargeSensor, 
+    public static void start(float svart, float hvit, Farge fargeSensor, 
             Farge fargeKorrigering, Bil bil) {
 
         float farge = 0;
         float fargeKorr = 0;
 
+        float fargeSpeed = ((hvit - svart) * 0.65f) + svart;
+
         int topSpeed = 900;
-        int midSpeed = 600;
-        int minSpeed = 300;
+        int midSpeed = 750;
+        int minSpeed = 200;
 
         int accTopSpeed = 8000;
         int accMinSpeed = 4000;
@@ -75,19 +80,17 @@ public class App {
 
         bil.A.setAcceleration(accTopSpeed);
         bil.C.setAcceleration(accTopSpeed);
+        Stopwatch timer = new Stopwatch();
+        timer.reset();
 
         while (true) {
             farge = fargeSensor.getFarge();
             fargeKorr = fargeKorrigering.getFarge();
 
             if (farge > svart) {
-                bil.A.setSpeed(topSpeed);
-                bil.C.setSpeed(topSpeed);
-
-                // bil.A.setSpeed(midSpeed);
-                // bil.C.setSpeed(midSpeed);
-                // bil.A.setAcceleration(accMinSpeed);
-                // bil.C.setAcceleration(accMinSpeed);
+                // TODO: Eventuelt fjerne
+                bil.A.setAcceleration(accMinSpeed);
+                bil.C.setAcceleration(accMinSpeed);
 
                 if (retning == 0) {
                     // Venstre
@@ -101,35 +104,42 @@ public class App {
                 } else  {
                     // Venstre
                     if (retning == 1) { 
-                        bil.C.setSpeed(topSpeed);
-                        if (farge > (svart + 5)) {
-                            bil.A.setSpeed(minSpeed);
-                        } else {
-                            bil.A.setSpeed(midSpeed);
-                        }
+                        if (timer.elapsed() > 20) {
+                            if (farge > fargeSpeed) {
+                                bil.C.setSpeed(topSpeed);
+                                bil.A.setSpeed(minSpeed);
+                            } else {
+                                bil.C.setSpeed(topSpeed);
+                                bil.A.setSpeed(midSpeed);
+                            }
 
-                        if (fargeKorr < svart) {
-                            retning = 0;
-                        }
+                            if (fargeKorr < svart) {
+                                retning = 0;
+                            }
 
+                            timer.reset();
+                        }
                         // Høyre
                     } else if (retning == -1) {
-                        bil.A.setSpeed(topSpeed);
-                        if (farge > (svart + 5)) {
+                        if (farge > fargeSpeed) {
+                            bil.A.setSpeed(topSpeed);
                             bil.C.setSpeed(minSpeed);
                         } else {
+                            bil.A.setSpeed(topSpeed);
                             bil.C.setSpeed(midSpeed);
                         }
                     }
+
                 }
             } else {
                 retning = 0;
 
+                // TODO: Eventuelt fjerne
+                bil.A.setAcceleration(accTopSpeed);
+                bil.C.setAcceleration(accTopSpeed);
+
                 bil.A.setSpeed(topSpeed);
                 bil.C.setSpeed(topSpeed);
-
-                // bil.A.setAcceleration(accTopSpeed);
-                // bil.C.setAcceleration(accTopSpeed);
             }
 
             bil.A.forward();
