@@ -4,12 +4,12 @@ import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.robotics.SampleProvider;
 import lejos.hardware.port.Port;
 
-public class Farge {
-    private EV3ColorSensor sensor;
-    private SampleProvider fargeLeser;
-    private float[] fargeSample;
+public final class Farge {
+    private final EV3ColorSensor sensor;
+    private final SampleProvider fargeLeser;
+    private final float[] fargeSample;
 
-    private int svart = 0;
+    private final int svart = 0;
 
     public Farge(Port port) {
         sensor = new EV3ColorSensor(port);
