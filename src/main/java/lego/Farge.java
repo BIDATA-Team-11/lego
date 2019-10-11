@@ -1,3 +1,9 @@
+/**
+* Klasse som holder styr på farger og korrigering.
+*
+* @param port   Portid for fargesensor
+*/
+
 package lego;
 
 import lejos.hardware.sensor.EV3ColorSensor;
