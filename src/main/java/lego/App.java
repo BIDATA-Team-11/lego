@@ -15,7 +15,7 @@ public static void main (String[] args) throws Exception {
         Bil bil = new Bil();
 
         Brick brick = BrickFinder.getDefault();
-        Port fargePort = brick.getPort("S2"); // fargesensor
+        Port fargePort = brick.getPort("S2");            // fargesensor
         Port fargePortKorrigering = brick.getPort("S4"); // fargesensor
 
         Farge fargeSensor = new Farge(fargePort);
@@ -23,7 +23,7 @@ public static void main (String[] args) throws Exception {
 
         float svart = fargeSensor.kalibrering();
         float hvit = fargeKorrigering.kalibrering();
-        System.out.printf("%s - %s\n", svart, hvit);
+        System.out.printf("%s - %s\n", svart, hvit);  //Printer ut informasjon hva sensoren ser for å troubleshoote
         Thread.sleep(3000);
 
         float farge = 0;
@@ -40,48 +40,48 @@ public static void main (String[] args) throws Exception {
 
         int retning = 0;
 
-        bil.A.setSpeed(topSpeed);
+        bil.A.setSpeed(topSpeed);                    //Setter hastighet på motorene
         bil.C.setSpeed(topSpeed);
 
-        bil.A.setAcceleration(accTopSpeed);
+        bil.A.setAcceleration(accTopSpeed);          //Setter akselerasjon til motorene
         bil.C.setAcceleration(accTopSpeed);
 
-        while (true) {
-            farge = fargeSensor.getFarge();
-            fargeKorr = fargeKorrigering.getFarge();
+        while (true) {                               //While loop som kjører hele logikken
+            farge = fargeSensor.getFarge();          //får inn fargen sensoren ser
+            fargeKorr = fargeKorrigering.getFarge(); //får inn korrigeringen som blir laget vha fargen tidligere fått inn
 
-            if (farge > svart) {
+            if (farge > svart) {                     //hvis fargen en ser er mindre enn svartverdien
                 bil.A.setSpeed(midSpeed);
                 bil.C.setSpeed(midSpeed);
 
                 // bil.A.setAcceleration(accMinSpeed);
                 // bil.C.setAcceleration(accMinSpeed);
 
-                if (retning == 0) {
+                if (retning == 0) {                  //if logikk for retning
                     // Venstre
                     if (fargeKorr > svart) {
                         retning = 1;
 
-                        // HÃ¸yre
+                                                     // HÃ¸yre
                     } else if (fargeKorr < svart) {
                         retning = -1;
                     }
                 } else  {
-                    // Venstre
+                                                     // Venstre
                     if (retning == 1) { 
                         bil.A.setSpeed(minSpeed);
                         if (fargeKorr < svart) {
                             retning = 0;
                         }
 
-                        // HÃ¸yre
+                                                     // HÃ¸yre
                     } else if (retning == -1) {
                         bil.C.setSpeed(minSpeed);
                     }
                 }
 
-            } else {
-                retning = 0;
+            } else {                                 //hvis fargen en ser er lik eller større enn svartverdien
+                retning = 0;                         //kjører rett fram
 
                 bil.A.setSpeed(topSpeed);
                 bil.C.setSpeed(topSpeed);
