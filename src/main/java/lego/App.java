@@ -31,15 +31,28 @@ public class App {
         do {
             int knapp = Button.waitForAnyEvent();
 
-            if (knapp == 8) {
+            if (knapp == Button.ID_RIGHT) {
                 svart = fargeSensor.kalibrering();
-            } else if (knapp == 16) {
+                System.out.println("Ferdig kalibrert");
+            } else if (knapp == Button.ID_LEFT) {
                 fortsett = true;
                 start(svart, fargeSensor, fargeKorrigering, bil);
-            } else if (knapp == 4) {
+            }else if (knapp == Button.ID_UP) {
+                printFarge(fargeSensor, fargeKorrigering);
+            } else if (knapp == Button.ID_DOWN) {
                 fortsett = true;
             }
         } while (!fortsett);
+    }
+
+    public static void printFarge(Farge fargeSensor, Farge fargeKorrigering) {
+        float farge = 0;
+        float fargeKorr = 0;
+
+        farge = fargeSensor.getFarge();
+        fargeKorr = fargeKorrigering.getFarge();
+
+        System.out.printf("%.3f - %.3f\n", farge, fargeKorr);
     }
 
     public static void start(float svart, Farge fargeSensor, 
@@ -49,12 +62,9 @@ public class App {
         float fargeKorr = 0;
 
         int topSpeed = 900;
-        int midSpeed = 900;
+        int midSpeed = 600;
         int minSpeed = 300;
-        // int minSpeed = 350;
-        // int topSpeed = 600;
-        // int midSpeed = 400;
-        // int minSpeed = 50;
+
         int accTopSpeed = 8000;
         int accMinSpeed = 4000;
 
@@ -71,9 +81,11 @@ public class App {
             fargeKorr = fargeKorrigering.getFarge();
 
             if (farge > svart) {
-                bil.A.setSpeed(midSpeed);
-                bil.C.setSpeed(midSpeed);
+                bil.A.setSpeed(topSpeed);
+                bil.C.setSpeed(topSpeed);
 
+                // bil.A.setSpeed(midSpeed);
+                // bil.C.setSpeed(midSpeed);
                 // bil.A.setAcceleration(accMinSpeed);
                 // bil.C.setAcceleration(accMinSpeed);
 
@@ -89,14 +101,25 @@ public class App {
                 } else  {
                     // Venstre
                     if (retning == 1) { 
-                        bil.A.setSpeed(minSpeed);
+                        bil.C.setSpeed(topSpeed);
+                        if (farge > (svart + 5)) {
+                            bil.A.setSpeed(minSpeed);
+                        } else {
+                            bil.A.setSpeed(midSpeed);
+                        }
+
                         if (fargeKorr < svart) {
                             retning = 0;
                         }
 
                         // Høyre
                     } else if (retning == -1) {
-                        bil.C.setSpeed(minSpeed);
+                        bil.A.setSpeed(topSpeed);
+                        if (farge > (svart + 5)) {
+                            bil.C.setSpeed(minSpeed);
+                        } else {
+                            bil.C.setSpeed(midSpeed);
+                        }
                     }
                 }
             } else {

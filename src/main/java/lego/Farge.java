@@ -29,7 +29,8 @@ public class Farge {
             svart += this.fargeSample[0] * 100;
         }
 
-        return ((svart / 100) + 5);
+        return ((svart / 100) + 2);
+        // return ((svart / 100) + 5);
         // return (svart / 100);
     }
 }
