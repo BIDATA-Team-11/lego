@@ -91,20 +91,13 @@ public class App {
 
         float fargeSpeed = ((hvit - svart) * 0.65f) + svart;
 
-        int topSpeed = 900;
-        int midSpeed = 750;
-        int minSpeed = 200;
-
-        int accTopSpeed = 8000;
-        int accMinSpeed = 4000;
-
         Retning retning = Retning.FRAM;
 
-        bil.A.setSpeed(topSpeed);
-        bil.C.setSpeed(topSpeed);
+        bil.A.setSpeed(Motorhastighet.max);
+        bil.C.setSpeed(Motorhastighet.max);
 
-        bil.A.setAcceleration(accTopSpeed);
-        bil.C.setAcceleration(accTopSpeed);
+        bil.A.setAcceleration(Motorhastighet.maxAcc);
+        bil.C.setAcceleration(Motorhastighet.maxAcc);
         Stopwatch timer = new Stopwatch();
         timer.reset();
 
@@ -114,8 +107,8 @@ public class App {
 
             if (farge > svart) {
                 // TODO: Eventuelt fjerne
-                bil.A.setAcceleration(accMinSpeed);
-                bil.C.setAcceleration(accMinSpeed);
+                bil.A.setAcceleration(Motorhastighet.minAcc);
+                bil.C.setAcceleration(Motorhastighet.minAcc);
 
                 if (retning == Retning.FRAM) {
                     // Venstre
@@ -131,11 +124,11 @@ public class App {
                     if (retning == Retning.VENSTRE) {
                         if (timer.elapsed() > 20) {
                             if (farge > fargeSpeed) {
-                                bil.C.setSpeed(topSpeed);
-                                bil.A.setSpeed(minSpeed);
+                                bil.C.setSpeed(Motorhastighet.max);
+                                bil.A.setSpeed(Motorhastighet.min);
                             } else {
-                                bil.C.setSpeed(topSpeed);
-                                bil.A.setSpeed(midSpeed);
+                                bil.C.setSpeed(Motorhastighet.max);
+                                bil.A.setSpeed(Motorhastighet.mid);
                             }
 
                             if (fargeKorr < svart) {
@@ -147,11 +140,11 @@ public class App {
                         // Høyre
                     } else if (retning == Retning.HØYRE) {
                         if (farge > fargeSpeed) {
-                            bil.A.setSpeed(topSpeed);
-                            bil.C.setSpeed(minSpeed);
+                            bil.A.setSpeed(Motorhastighet.max);
+                            bil.C.setSpeed(Motorhastighet.min);
                         } else {
-                            bil.A.setSpeed(topSpeed);
-                            bil.C.setSpeed(midSpeed);
+                            bil.A.setSpeed(Motorhastighet.max);
+                            bil.C.setSpeed(Motorhastighet.mid);
                         }
                     }
 
@@ -160,11 +153,11 @@ public class App {
                 retning = Retning.FRAM;
 
                 // TODO: Eventuelt fjerne
-                bil.A.setAcceleration(accTopSpeed);
-                bil.C.setAcceleration(accTopSpeed);
+                bil.A.setAcceleration(Motorhastighet.maxAcc);
+                bil.C.setAcceleration(Motorhastighet.maxAcc);
 
-                bil.A.setSpeed(topSpeed);
-                bil.C.setSpeed(topSpeed);
+                bil.A.setSpeed(Motorhastighet.max);
+                bil.C.setSpeed(Motorhastighet.max);
             }
 
             bil.A.forward();
