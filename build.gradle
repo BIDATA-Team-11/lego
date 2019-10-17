@@ -55,3 +55,7 @@ mindstorms {
     // Optional: the directory on the EV3 brick where the applications will be stored. Default is /home/lejos/programs
     home = '/home/lejos/programs'
 }
+
+task myJavadocs(type: Javadoc) {
+   source = sourceSets.main.allJava
+ }
