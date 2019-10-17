@@ -61,6 +61,7 @@ public class Farge {
      /**
       * Metode for å se om sensoren ser svart.
       * @return True hvis sensoren ser svart, false ellers.
+      * @see sensor
       */
      public boolean hasLine() {
        SampleProvider colorSample = this.sensor.getColorIDMode();
@@ -70,7 +71,7 @@ public class Farge {
      }
 
      /**
-      * Invers av hasLine()
+      * Invers av hasLine(). Kun for å gjøre logikk for styring mer lesbar.
       * @return True hvis sensoren ikke ser svart, false ellers.
       */
      public boolean lostLine() {
@@ -79,6 +80,7 @@ public class Farge {
 
      /**
       * Metode for å se om sensoren ser svart. Denne er ubrukt i Awesomebot!
+      * @see sensor
       * @return True hvis sensoren ser noe annet enn svart eller hvit, false ellers.
       */
      public boolean erUbestemt() {
