@@ -23,7 +23,7 @@ import lejos.hardware.Button;
 public class App {
     /**
      * Main-metode for klienten. Her får man valget om å printe ut de fargene sensorene ser, kalibrere fargesensorene eller å få bilen til å kjøre.
-     * @param args Argumenter blir ignorert.
+     * @param args Argumenter blir ignorert. Heh.
      * @throws Exception Gir EV3 mulighet til å catche eventuelle feil.
      */
     public static void main (String[] args) throws Exception {
@@ -38,8 +38,6 @@ public class App {
         Farge correctionSensor = new Farge(correctionSensorPort);
 
         boolean fortsett = false;
-        float svart = 0;
-        float hvit = 0;
 
         System.out.println("v. 1.0.0-awesomebot");
         System.out.println("Ned:    Les farge (debug)");
