@@ -14,20 +14,17 @@ public class Bil {
     RegulatedMotor left;
     RegulatedMotor right;
 
-    boolean actualMax;
+    boolean actualMax; // Whether to use calculated speeds or speeds set in config
 
-    int maxSpeed;
-    int midSpeed;
-    int minSpeed;
+    float maxSpeed;
+    float midSpeed;
+    float minSpeed;
 
     Retning state;
     Retning newState;
 
     RegulatedMotor[] synchronizedMotors;
 
-    /**
-     * Reverserer motorene. Det som er fram er nå bak og det som er høyre er nå venstre.
-     */
     public Bil(boolean actualMax) {
         left = MirrorMotor.invertMotor(Motor.A);  // Inverter motorene p* grunn av omdreiningen av v*res kj*ret*y for *
         right = MirrorMotor.invertMotor(Motor.C);  // Gj*re det lettere for oss * kode ved * bruke rett retning
@@ -40,8 +37,8 @@ public class Bil {
         int maxLeft = (int)left.getMaxSpeed();
         int maxRight = (int)right.getMaxSpeed();
         this.maxSpeed = maxLeft < maxRight ? maxLeft : maxRight;
-        this.midSpeed = (int)(this.maxSpeed * (Motorhastighet.midSpeedPercentage/100));
-        this.minSpeed = (int)(this.maxSpeed * (Motorhastighet.minSpeedPercentage/100));
+        this.midSpeed = this.maxSpeed * Motorhastighet.midSpeedFactor;
+        this.minSpeed = this.maxSpeed * Motorhastighet.minSpeedFactor;
       } else {
         this.maxSpeed = Motorhastighet.max;
         this.midSpeed = Motorhastighet.mid;
@@ -52,8 +49,8 @@ public class Bil {
     public void forward() {
       this.recalculateSpeeds();
 
-      left.setSpeed(maxSpeed);
-      right.setSpeed(maxSpeed);
+      left.setSpeed((int)maxSpeed);
+      right.setSpeed((int)maxSpeed);
       left.forward();
       right.forward();
 
@@ -62,8 +59,8 @@ public class Bil {
 
     public void leftTurn() {
         this.recalculateSpeeds();
-        left.setSpeed(minSpeed);
-        right.setSpeed(midSpeed);
+        left.setSpeed((int)minSpeed);
+        right.setSpeed((int)midSpeed);
         left.forward();
         right.forward();
 
@@ -72,8 +69,8 @@ public class Bil {
 
     public void rightTurn() {
         this.recalculateSpeeds();
-        left.setSpeed(midSpeed);
-        right.setSpeed(minSpeed);
+        left.setSpeed((int)midSpeed);
+        right.setSpeed((int)minSpeed);
         left.forward();
         right.forward();
 

@@ -12,6 +12,6 @@ class Motorhastighet {
   public final static int min = 250;
   public final static int maxAcc = 8000;
   public final static int minAcc = 4000;
-  public final static int midSpeedPercentage = 70;
-  public final static int minSpeedPercentage = 20;
+  public final static float midSpeedFactor = 0.7f;
+  public final static float minSpeedFactor = 0.2f;
 }
