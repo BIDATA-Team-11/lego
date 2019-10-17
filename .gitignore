@@ -9,3 +9,4 @@ jdt.ls-java-project/
 # Jokkes dirty hacks
 /src/lejos/
 *.class
+*test.java
