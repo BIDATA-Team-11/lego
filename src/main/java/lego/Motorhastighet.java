@@ -1,7 +1,12 @@
 package lego;
 
 /**
- * Hjelpeklasse for å sette motorhastigheter og akkselerasjon.
+ * Hjelpeklasse for å sette motorhastigheter og akselerasjon.
+ * @author Stian Selvåg
+ * @author Herman Aagaard
+ * @author Henrik Hafsø
+ * @author Joakim Skogø Langvand
+ * @author Erling Sletta
  * @author Torbjørn Øverås
  * @author Gruppe 11, dataingeniør NTNU, første semester.
  * @version 1.0.0
