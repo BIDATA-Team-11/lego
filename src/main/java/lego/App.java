@@ -29,13 +29,15 @@ public class App {
     public static void main (String[] args) throws Exception {
         Brick brick = BrickFinder.getDefault();
 
-        Port fargePort = brick.getPort("S2");               // Hovedfargesensor
-        Port fargePortKorrigering = brick.getPort("S4");    // Korrigeringsfargesensor
+        /*
+        * Oppsett av fargesensorer.
+        */
+        Port mainSensorPort = brick.getPort("S2");
+        Port correctionSensorPort = brick.getPort("S4");
+        Farge mainSensor = new Farge(mainSensorPort);
+        Farge correctionSensor = new Farge(correctionSensorPort);
 
-        Farge mainSensor = new Farge(fargePort);
-        Farge correctionSensor = new Farge(fargePortKorrigering);
-
-        Bil bil = new Bil(false);
+        Bil bil = new Bil(false); // true: kalkulerte hastigheter, false: hardkoda hastigheter.
 
         boolean fortsett = false;
         float svart = 0;
