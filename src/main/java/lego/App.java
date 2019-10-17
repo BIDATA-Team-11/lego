@@ -10,24 +10,23 @@ import lejos.utility.Stopwatch;
 import lejos.hardware.Button;
 
 /**
- * LejOS Klient for Legobil prosjekt 2019
+ * LejOS Klient for Legobilprosjekt 2019
  * @author Torbjørn Øverås
+ * @author Gruppe 11, dataingeniør NTNU, første semester.
  * @version 1.0.0
  */
 public class App {
     /**
-     * Start metoden til klienten. Her får man valget om å printe ut de fargene
-     * sensorene ser, kalibrer farge sensorene eller få bilen til å kjøre.
-     * @param args argumenter man kan gi main funksjonen. Disse blir ikke tatt
-     * i betrakning.
+     * Main-metode for klienten. Her får man valget om å printe ut de fargene sensorene ser, kalibrere fargesensorene eller å få bilen til å kjøre.
+     * @param args argumenter man kan gi main funksjonen. Disse blir ignorert.
      * @throws Exception om en feil oppstår på EV3 maskinen vil en feil bli
      * kastet.
      */
     public static void main (String[] args) throws Exception {
         Brick brick = BrickFinder.getDefault();
 
-        Port fargePort = brick.getPort("S2");               // Hoved - fargesensor
-        Port fargePortKorrigering = brick.getPort("S4");    // Korrigering - fargesensor
+        Port fargePort = brick.getPort("S2");               // Hovedfargesensor
+        Port fargePortKorrigering = brick.getPort("S4");    // Korrigeringsfargesensor
 
         Farge fargeSensor = new Farge(fargePort);
         Farge fargeKorrigering = new Farge(fargePortKorrigering);
@@ -58,9 +57,9 @@ public class App {
     }
 
     /**
-     * Printer ut til LCD skjer hvilke farger de 2 fargesensorene ser.
-     * @param fargeSensor Hoved Farge Sensore fra LejOS API (EV3ColorSensor).
-     * @param fargeKorrigering Helpe Farge Sensor (EV3ColorSensor).
+     * Printer verdier fra fargesensorene til LCD..
+     * @param fargeSensor Hovedfargesensor, står midt på fronten på roboten (EV3ColorSensor).
+     * @param fargeKorrigering Korrigeringssensor, står til høyre for hovedfargesensor (EV3ColorSensor).
      * @see Farge
      */
     public static void printFarge(Farge fargeSensor, Farge fargeKorrigering) {
@@ -75,11 +74,11 @@ public class App {
 
     /**
      * Starter selve legobilen.
-     * @param svart en float verdi som representerer svart fargen.
-     * @param hvit en float verdi som representerer hvit fargen.
-     * @param fargeSensor hoved farge sensor.
-     * @param fargeKorrigering hjelpe farge sensor for korrigering.
-     * @param bil klassen som tilby motor egenskaper for legobilen.
+     * @param svart Floatverdi som representerer svart.
+     * @param hvit Floatverdi som representerer hvit.
+     * @param fargeSensor Hovedfargesensor. Står midt på fronten på roboten..
+     * @param fargeKorrigering Korrigeringssensor. Står til høyre for hovedfargesensor.
+     * @param bil Hjelpeklasse for motorene.
      * @see Farge
      * @see Bil
      */
