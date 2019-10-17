@@ -52,6 +52,8 @@ public class App {
                 printFarge(fargeSensor, fargeKorrigering);
             } else if (knapp == Button.ID_DOWN) {
                 fortsett = true;
+            } else if (knapp == Button.ID_ENTER) {
+                fargeSensor.printFargeID();
             }
         } while (!fortsett);
     }

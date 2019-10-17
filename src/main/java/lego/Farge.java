@@ -4,32 +4,38 @@ package lego;
 import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.robotics.SampleProvider;
 import lejos.hardware.port.Port;
+import lejos.robotics.Color;
+import lejos.hardware.Button;
+import lejos.hardware.BrickFinder;
+import lejos.hardware.Keys;
+import lejos.hardware.ev3.EV3;
+
 
 /**
- * Fargeklassen representerer en Farge sensor fra LejOS API'et.
+ * Hjelpeklasse for fargesensorene i LejOS API.
  * @author Torbjørn Øverås
  * @version 1.0.0
  */
 public class Farge {
     private EV3ColorSensor sensor;
-    private SampleProvider fargeLeser; 
-    private float[] fargeSample; 
-    
+    private SampleProvider fargeLeser;
+    private float[] fargeSample;
+
     private int svart = 0;
 
     /**
-     * Konstuerer en ny farge sensor fra LejOS API (EV3ColorSensor)
-     * @param port den fysiske porten som blir brukt på EV3 maskinen.
+     * Konstuerer en ny EV3ColorSensor fra LejOS API.
+     * @param port Fysisk port på EV3-maskinen.
      * @see Port
      */
     public Farge(Port port) {
-        sensor = new EV3ColorSensor(port); 
-        fargeLeser = sensor.getMode("RGB");  
-        fargeSample = new float[fargeLeser.sampleSize()];  
+        sensor = new EV3ColorSensor(port);
+        fargeLeser = sensor.getMode("RGB");
+        fargeSample = new float[fargeLeser.sampleSize()];
     }
 
     /**
-     * Henter den fargen sensoren ser på i dette øyeblikket.
+     * Henter ut fargeverdi som sensoren ser.
      * @return en float som representerer den fargen sensoren ser på i dette
      * øyeblikket.
      */
@@ -37,6 +43,32 @@ public class Farge {
         this.fargeLeser.fetchSample(this.fargeSample, 0);
         return fargeSample[0]*100;
     }
+
+    /**
+     * Henter ut fargeverdi som sensoren ser.
+     * øyeblikket.
+     */
+     public void printFargeID() {
+         EV3 ev3 = (EV3) BrickFinder.getLocal();
+         Keys keys = ev3.getKeys();
+         SampleProvider colorSample = this.sensor.getColorIDMode();
+         float[] sample = new float[colorSample.sampleSize()];
+         colorSample.fetchSample(sample, 0);
+         int colorId = (int)sample[0];
+         String colorName = "";
+         switch(colorId){
+             case Color.NONE: colorName = "NONE"; break;
+             case Color.BLACK: colorName = "BLACK"; break;
+             case Color.BLUE: colorName = "BLUE"; break;
+             case Color.GREEN: colorName = "GREEN"; break;
+             case Color.YELLOW: colorName = "YELLOW"; break;
+             case Color.RED: colorName = "RED"; break;
+             case Color.WHITE: colorName = "WHITE"; break;
+             case Color.BROWN: colorName = "BROWN"; break;
+         }
+         System.out.println(colorId + " - " + colorName);
+         keys.waitForAnyPress();
+     }
 
     /**
      * Kalibrerer hva fargesensoren ser på i det øyeblikket denne funksjonen
