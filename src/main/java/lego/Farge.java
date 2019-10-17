@@ -23,10 +23,6 @@ import lejos.hardware.ev3.EV3;
 
 public class Farge {
     private EV3ColorSensor sensor;
-    private SampleProvider fargeLeser;
-    private float[] fargeSample;
-
-    private int svart = 0;
 
     /**
      * Konstuerer en ny EV3ColorSensor fra LejOS API.
@@ -35,18 +31,6 @@ public class Farge {
      */
     public Farge(Port port) {
         sensor = new EV3ColorSensor(port);
-        fargeLeser = sensor.getMode("RGB");
-        fargeSample = new float[fargeLeser.sampleSize()];
-    }
-
-    /**
-     * Henter ut fargeverdi som sensoren ser.
-     * @return en float som representerer den fargen sensoren ser på i dette
-     * øyeblikket.
-     */
-    public float getFarge() {
-        this.fargeLeser.fetchSample(this.fargeSample, 0);
-        return fargeSample[0]*100;
     }
 
     /**
@@ -86,7 +70,7 @@ public class Farge {
 
      /**
       * Invers av hasLine()
-      * @return True hvis sensoren ikke ser svart, true ellers.
+      * @return True hvis sensoren ikke ser svart, false ellers.
       */
      public boolean lostLine() {
        return !this.hasLine();
