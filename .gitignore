@@ -5,3 +5,7 @@
 build
 jdt.ls-java-project/
 .metadata
+
+# Jokkes dirty hacks
+/src/lejos/
+*.class
