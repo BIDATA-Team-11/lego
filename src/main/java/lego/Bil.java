@@ -73,7 +73,11 @@ public class Bil {
     }
 
     /**
-     * Får legobilen til å bevege seg fremmover.
+     * Setter motorene til å gå framover. Full hastighet.
+     * @see maxSpeed
+     * @see left
+     * @see right
+     * @see accelrationTest
      */
     public void forward() {
       this.recalculateSpeeds();
@@ -83,17 +87,21 @@ public class Bil {
           right.setAcceleration(Motorhastighet.maxAcc);
       }
 
-      left.setSpeed((int)maxSpeed);
-      right.setSpeed((int)maxSpeed);
-      left.forward();
-      right.forward();
+      this.left.setSpeed((int)maxSpeed);
+      this.right.setSpeed((int)maxSpeed);
+      this.left.forward();
+      this.right.forward();
 
       System.out.println("FORWARD");
     }
 
     /**
-     * Får legobilen til å bevege seg mot venstre ved å redusere hastigheten på
-     * det venstre hjul.
+     * Setter motorene til å svinge mot venstre.
+     * @see midSpeed
+     * @see minSpeed
+     * @see left
+     * @see right
+     * @see accelrationTest
      */
     public void leftTurn() {
         this.recalculateSpeeds();
@@ -102,17 +110,21 @@ public class Bil {
           this.setAcceleration(Motorhastighet.minAcc);
         }
 
-        left.setSpeed((int)minSpeed);
-        right.setSpeed((int)midSpeed);
-        left.forward();
-        right.forward();
+        this.left.setSpeed((int)minSpeed);
+        this.right.setSpeed((int)midSpeed);
+        this.left.forward();
+        this.right.forward();
 
         System.out.println("LEFT");
     }
 
     /**
-     * Får legobilen til å bevege seg mot høyre ved å redusere hastigheten på
-     * det høyre hjul.
+     * Setter motorene til å svinge mot høyre.
+     * @see midSpeed
+     * @see minSpeed
+     * @see left
+     * @see right
+     * @see accelrationTest
      */
     public void rightTurn() {
         this.recalculateSpeeds();
@@ -121,18 +133,19 @@ public class Bil {
           this.setAcceleration(Motorhastighet.minAcc);
         }
 
-        left.setSpeed((int)midSpeed);
-        right.setSpeed((int)minSpeed);
-        left.forward();
-        right.forward();
+        this.left.setSpeed((int)midSpeed);
+        this.right.setSpeed((int)minSpeed);
+        this.left.forward();
+        this.right.forward();
 
         System.out.println("RIGHT");
     }
 
     /**
-     * Endrer akselerasjonen på motorene.
-     * @param accelration en heltallsverdi som representerer hvor mye man skal
-     * endre akselerasjonen.
+     * Setter akselerasjon på begge motorer.
+     * @param accelration Akselerasjon
+     * @see left
+     * @see right
      */
     private void setAcceleration(int accelration) {
       this.left.setAcceleration(accelration);
@@ -140,7 +153,7 @@ public class Bil {
     }
 
     /**
-     * Oppdaterer motorenes kjøreretning basert på legobilens status.
+     * Sjekker status og oppdaterer motorer deretter.
      */
     public void update() {
         if (this.state == Direction.FORWARD) {
@@ -153,24 +166,28 @@ public class Bil {
     }
 
     /**
-     * Oppdaterer legobilens status. Statusen representerer hvilken retning
-     * legobilen skal bevege seg.
-     * @param state retningen man ønsker legobilen skal kjøre.
+     * Setter status for objektet, ingen forandring før update() kalles.
+     * @param state Status i form av en Direction-verdi.
+     * @see state
      */
     public void setState(Direction state) {
       this.state = state;
     }
 
     /**
-     * Henter legobilens retning.
-     * @return bilens status som representerer bilens retning.
+     * Returnerer status til objektet. OBS: dette er ikke nødvendigvis aktiv status, dersom status er forandra siden forrige update().
+     * @see state
+     * @return state Status som vil være aktiv etter neste update().
      */
     public Direction getState() {
       return this.state;
     }
 
     /**
-     * Printer ut de kalkulerte hastighetene.
+     * Printer maks hastighet rapportert av EV3, multiplisert med faktorer oppgitt i konfigurasjonsfil, til display. Returnerer ingenting. Denne kan brukes til debugging, og er aktuell dersom det brukes kalkulerte hastigheter i stedet for hastigheter satt i konfigurasjonsfil.
+     * @see maxSpeed
+     * @see midSpeed
+     * @see minSpeed
      */
     public void printCalculatedSpeeds() {
       this.recalculateSpeeds();
