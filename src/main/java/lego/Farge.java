@@ -1,5 +1,16 @@
-package lego;
+/**
+ * Hjelpeklasse for fargesensorene i LejOS API.
+ * @author Stian Selvåg
+ * @author Herman Aagaard
+ * @author Henrik Hafsø
+ * @author Joakim Skogø Langvand
+ * @author Erling Sletta
+ * @author Torbjørn Øverås
+ * @author Gruppe 11, dataingeniør NTNU, første semester.
+ * @version 1.0.0
+ */
 
+package lego;
 
 import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.robotics.SampleProvider;
@@ -10,12 +21,6 @@ import lejos.hardware.BrickFinder;
 import lejos.hardware.Keys;
 import lejos.hardware.ev3.EV3;
 
-
-/**
- * Hjelpeklasse for fargesensorene i LejOS API.
- * @author Torbjørn Øverås
- * @version 1.0.0
- */
 public class Farge {
     private EV3ColorSensor sensor;
     private SampleProvider fargeLeser;
@@ -80,7 +85,15 @@ public class Farge {
      }
 
      /**
-      * Metode for å se om sensoren ser svart.
+      * Invers av hasLine()
+      * @return True hvis sensoren ikke ser svart, true ellers.
+      */
+     public boolean lostLine() {
+       return !this.hasLine();
+     }
+
+     /**
+      * Metode for å se om sensoren ser svart. Denne er ubrukt i Awesomebot!
       * @return True hvis sensoren ser svart, false ellers.
       */
      public boolean erUbestemt() {
@@ -90,12 +103,7 @@ public class Farge {
        int color = (int)sample[0];
        boolean notBlack = color == Color.BLACK ? false : true;
        boolean notWhite = color != Color.WHITE ? true : false;
-       //return notWhite && notBlack ? true : false;
-       return true;
-     }
-
-     public boolean lostLine() {
-       return !this.hasLine();
+       return notWhite && notBlack ? true : false;
      }
 
     /**
