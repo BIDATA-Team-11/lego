@@ -37,7 +37,7 @@ public class App {
         float svart = 0;
         float hvit = 0;
 
-        System.out.println("Versjon 1.0.0-awesomebot");
+        System.out.println("v. 1.0.0-awesomebot");
         System.out.println("Ned:    Les farge (debug)");
         System.out.println("Enter:  Start");
 
