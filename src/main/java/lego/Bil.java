@@ -26,8 +26,8 @@ public class Bil {
     float midSpeed;
     float minSpeed;
 
-    Retning state;
-    Retning newState;
+    Direction state;
+    Direction newState;
 
     boolean accelrationTest;
 
@@ -39,7 +39,7 @@ public class Bil {
         right = MirrorMotor.invertMotor(Motor.C);
 
         this.actualMax = actualMax; // Bruker kalkulerte verdier hvis satt til true.
-        state = Retning.FRAM;
+        state = Direction.FORWARD;
         left.setAcceleration(Motorhastighet.maxAcc);
         right.setAcceleration(Motorhastighet.maxAcc);
 
@@ -112,20 +112,20 @@ public class Bil {
     }
 
     public void update() {
-        if (this.state == Retning.FRAM) {
+        if (this.state == Direction.FORWARD) {
           this.forward();
-        } else if (this.state == Retning.VENSTRE) {
+        } else if (this.state == Direction.LEFT) {
           this.leftTurn();
-        } else if (this.state == Retning.HØYRE) {
+        } else if (this.state == Direction.RIGHT) {
           this.rightTurn();
         }
     }
 
-    public void setState(Retning state) {
+    public void setState(Direction state) {
       this.state = state;
     }
 
-    public Retning getState() {
+    public Direction getState() {
       return this.state;
     }
 

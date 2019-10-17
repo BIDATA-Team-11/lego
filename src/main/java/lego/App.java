@@ -87,16 +87,16 @@ public class App {
         */
         while (true) {
             if (mainSensor.lostLine()) {
-                if (bil.getState() == Retning.FRAM || correctionSensor.hasLine()) {
+                if (bil.getState() == Direction.FORWARD || correctionSensor.hasLine()) {
                     if (correctionSensor.hasLine()) {
-                      bil.setState(Retning.HØYRE);
+                      bil.setState(Direction.RIGHT);
                       lineIsBetweenSensors = true;
                     } else if (!lineIsBetweenSensors) {
-                      bil.setState(Retning.VENSTRE);
+                      bil.setState(Direction.LEFT);
                     }
                 }
             } else {
-              bil.setState(Retning.FRAM);
+              bil.setState(Direction.FORWARD);
               lineIsBetweenSensors = false;
             }
 
