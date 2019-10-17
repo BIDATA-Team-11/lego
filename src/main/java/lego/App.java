@@ -80,6 +80,11 @@ public class App {
         */
         boolean lineIsBetweenSensors = false;
 
+        /*
+        * "Hovedløkka" i programmet. Denne kjører til vi dreper den.
+        *
+        * Her ligger logikken som styrer retning - fram, sving til venstre, sving til høyre.
+        */
         while (true) {
             if (mainSensor.lostLine()) {
                 if (bil.getState() == Retning.FRAM || correctionSensor.hasLine()) {
@@ -90,9 +95,7 @@ public class App {
                       bil.setState(Retning.VENSTRE);
                     }
                 }
-            }
-
-            if (mainSensor.hasLine()) {
+            } else {
               bil.setState(Retning.FRAM);
               lineIsBetweenSensors = false;
             }
