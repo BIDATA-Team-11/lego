@@ -31,6 +31,10 @@ public class Bil {
 
     boolean accelrationTest;
 
+    /**
+     * Konstuerer en ny Bil.
+     * @param actualMax Boolean som bestemmer om vi skal bruke kalkulerte hastigheter.
+     */
     public Bil(boolean actualMax) {
         /*
         * Inverterer motorene, siden de er montert motsatt av hva som er tiltenkt i APIet.
@@ -46,6 +50,14 @@ public class Bil {
         accelrationTest = false;
     }
 
+    /**
+     * Rekalkulerer hastigheter. Denne er aktuell dersom actualMax ser satt til true.
+     * @see maxSpeed
+     * @see midSpeed
+     * @see minSpeed
+     * @see left
+     * @see right
+     */
     private void recalculateSpeeds() {
       if (actualMax) {
         int maxLeft = (int)left.getMaxSpeed();
