@@ -23,15 +23,6 @@ public class Farge {
 
     private int svart = 0;
 
-<<<<<<< HEAD
-    public Farge(Port port) {                               // Lager klar fargesensor til å bruke RGB resultat
-        sensor = new EV3ColorSensor(port);        
-        fargeLeser = sensor.getMode("RGB");  
-        fargeSample = new float[fargeLeser.sampleSize()];   //Sier til sensor at den skal hente inn en ny samplesize
-    }
-
-    public float getFarge() {                               //get metode for å få inn farge under sensor
-=======
     /**
      * Konstuerer en ny EV3ColorSensor fra LejOS API.
      * @param port Fysisk port pÃ¥ EV3-maskinen.
@@ -49,15 +40,10 @@ public class Farge {
      * Ã¸yeblikket.
      */
     public float getFarge() {
->>>>>>> jokkolainen
         this.fargeLeser.fetchSample(this.fargeSample, 0);
         return fargeSample[0]*100;
     }
 
-<<<<<<< HEAD
-    public float kalibrering() {                            //utfører kalibrering slik at det vi definerer som svart finnes på ny hver gang
-        for (int i = 0; i < 100; ++i) {                     //Slik at lysforhold ikke kan ødelegge for koden. 
-=======
     /**
      * Testmetode. Printer fargeverdi.
      */
@@ -115,7 +101,6 @@ public class Farge {
      */
     public float kalibrering() {
         for (int i = 0; i < 100; ++i) {
->>>>>>> jokkolainen
             this.fargeLeser.fetchSample(this.fargeSample, 0);
             svart += this.fargeSample[0] * 100;
         }

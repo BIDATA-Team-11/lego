@@ -7,9 +7,11 @@ package lego;
  * @version 1.0.0
  */
 class Motorhastighet {
-  public final static int max = 900;
-  public final static int mid = 750;
+  public final static int max = 700;
+  public final static int mid = 500;
   public final static int min = 200;
   public final static int maxAcc = 8000;
   public final static int minAcc = 4000;
+  public final static int midSpeedPercentage = 70;
+  public final static int minSpeedPercentage = 20;
 }

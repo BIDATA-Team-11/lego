@@ -28,32 +28,36 @@ public class App {
         Port fargePort = brick.getPort("S2");               // Hovedfargesensor
         Port fargePortKorrigering = brick.getPort("S4");    // Korrigeringsfargesensor
 
-        Farge fargeSensor = new Farge(fargePort);
-        Farge fargeKorrigering = new Farge(fargePortKorrigering);
+        Farge mainSensor = new Farge(fargePort);
+        Farge correctionSensor = new Farge(fargePortKorrigering);
 
-        Bil bil = new Bil();
+        Bil bil = new Bil(false);
 
         boolean fortsett = false;
         float svart = 0;
         float hvit = 0;
 
-        System.out.println("Da kan du velge!");
+        System.out.println("Versjon 1.0.0-awesomebot");
+        System.out.println("Ned:    Les farge (debug)");
+        System.out.println("Enter:  Kjør");
+        //System.out.println();
+        //System.out.println("Debug:");
+        //bil.printCalculatedSpeeds();
+
         do {
             int knapp = Button.waitForAnyEvent();
 
             if (knapp == Button.ID_RIGHT) {
-                svart = fargeSensor.kalibrering();
-                hvit = fargeKorrigering.kalibrering();
+                svart = mainSensor.kalibrering();
+                hvit = correctionSensor.kalibrering();
                 System.out.println("Ferdig kalibrert");
             } else if (knapp == Button.ID_LEFT) {
                 fortsett = true;
-                start(svart, hvit, fargeSensor, fargeKorrigering, bil);
-            }else if (knapp == Button.ID_UP) {
-                //printFarge(fargeSensor, fargeKorrigering);
+                start(svart, hvit, mainSensor, correctionSensor, bil);
             } else if (knapp == Button.ID_DOWN) {
-                fortsett = true;
+                mainSensor.printFargeID();
             } else if (knapp == Button.ID_ENTER) {
-                fargeSensor.printFargeID();
+                start(svart, hvit, mainSensor, correctionSensor, bil);
             }
         } while (!fortsett);
     }
@@ -62,78 +66,91 @@ public class App {
      * Starter selve legobilen.
      * @param svart Floatverdi som representerer svart.
      * @param hvit Floatverdi som representerer hvit.
-     * @param fargeSensor Hovedfargesensor. Står midt på fronten på roboten..
-     * @param fargeKorrigering Korrigeringssensor. Står til høyre for hovedfargesensor.
+     * @param mainSensor Hovedfargesensor. Står midt på fronten på roboten..
+     * @param correctionSensor Korrigeringssensor. Står til høyre for hovedfargesensor.
      * @param bil Hjelpeklasse for motorene.
      * @see Farge
      * @see Bil
      */
-    public static void start(float svart, float hvit, Farge fargeSensor,
-            Farge fargeKorrigering, Bil bil) {
+    public static void start(float svart, float hvit, Farge mainSensor,
+            Farge correctionSensor, Bil bil) {
 
         Retning retning = Retning.FRAM;
 
-        bil.A.setSpeed(Motorhastighet.max);
-        bil.C.setSpeed(Motorhastighet.max);
+        //bil.left.setSpeed(Motorhastighet.max);
+        //bil.right.setSpeed(Motorhastighet.max);
 
-        bil.A.setAcceleration(Motorhastighet.maxAcc);
-        bil.C.setAcceleration(Motorhastighet.maxAcc);
+        bil.left.setAcceleration(Motorhastighet.maxAcc);
+        bil.right.setAcceleration(Motorhastighet.maxAcc);
+
         Stopwatch timer = new Stopwatch();
         timer.reset();
 
         while (true) {
-            if (!fargeSensor.erSvart()) {
+            if (!mainSensor.erSvart()) {
                 // TODO: Eventuelt fjerne
-                bil.A.setAcceleration(Motorhastighet.minAcc);
-                bil.C.setAcceleration(Motorhastighet.minAcc);
+                //bil.left.setAcceleration(Motorhastighet.minAcc);
+                //bil.right.setAcceleration(Motorhastighet.minAcc);
 
-                if (retning == Retning.FRAM) {
-                    if (!fargeKorrigering.erSvart()) {
-                        retning = Retning.VENSTRE;
+                if (retning == Retning.FRAM || correctionSensor.erSvart()) {
+                    if (correctionSensor.erSvart()) {
+                      retning = retning.VENSTRE;
+                      System.out.println("VENSTRE");
                     } else {
-                        retning = Retning.HØYRE;
+                      retning = retning.HØYRE;
+                      System.out.println("HØYRE");
                     }
-                } else  {
-                    if (retning == Retning.VENSTRE) {
+                }
+
+                if (retning == retning.VENSTRE) {
+                  bil.leftTurn();
+                } else if (retning == retning.HØYRE) {
+                  bil.rightTurn();
+                }
+
+    /*                if (retning == Retning.VENSTRE) {
                         if (timer.elapsed() > 20) {
-                            if (fargeSensor.erUbestemt()) {
-                                bil.C.setSpeed(Motorhastighet.max);
-                                bil.A.setSpeed(Motorhastighet.min);
+                            if (mainSensor.erUbestemt()) {
+                                bil.right.setSpeed(Motorhastighet.max);
+                                bil.left.setSpeed(Motorhastighet.min);
                             } else {
-                                bil.C.setSpeed(Motorhastighet.max);
-                                bil.A.setSpeed(Motorhastighet.mid);
+                                bil.right.setSpeed(Motorhastighet.max);
+                                bil.left.setSpeed(Motorhastighet.mid);
                             }
 
-                            if (fargeKorrigering.erSvart()) {
+                            if (correctionSensor.erSvart()) {
                                 retning = Retning.FRAM;
                             }
 
                             timer.reset();
                         }
                     } else if (retning == Retning.HØYRE) {
-                        if (fargeSensor.erUbestemt()) {
-                            bil.A.setSpeed(Motorhastighet.max);
-                            bil.C.setSpeed(Motorhastighet.min);
+                        if (mainSensor.erUbestemt()) {
+                            bil.left.setSpeed(Motorhastighet.max);
+                            bil.right.setSpeed(Motorhastighet.min);
                         } else {
-                            bil.A.setSpeed(Motorhastighet.max);
-                            bil.C.setSpeed(Motorhastighet.mid);
-                        }
-                    }
+                            bil.left.setSpeed(Motorhastighet.max);
+                            bil.right.setSpeed(Motorhastighet.mid);
+                        }*/
 
-                }
+                //}
             } else {
                 retning = Retning.FRAM;
+                System.out.println("FRAM");
 
                 // TODO: Eventuelt fjerne
-                bil.A.setAcceleration(Motorhastighet.maxAcc);
-                bil.C.setAcceleration(Motorhastighet.maxAcc);
+                //bil.left.setAcceleration(Motorhastighet.maxAcc);
+                //bil.right.setAcceleration(Motorhastighet.maxAcc);
 
-                bil.A.setSpeed(Motorhastighet.max);
-                bil.C.setSpeed(Motorhastighet.max);
+                //bil.left.setSpeed(Motorhastighet.max);
+                //bil.right.setSpeed(Motorhastighet.max);
             }
 
-            bil.A.forward();
-            bil.C.forward();
+            if (retning == Retning.FRAM) {
+              bil.forward();
+            }
+
+            while (mainSensor.erSvart());
         }
     }
 }
