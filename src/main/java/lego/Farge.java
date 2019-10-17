@@ -77,7 +77,7 @@ public class Farge {
 
      /**
       * Metode for å se om sensoren ser svart. Denne er ubrukt i Awesomebot!
-      * @return True hvis sensoren ser svart, false ellers.
+      * @return True hvis sensoren ser noe annet enn svart eller hvit, false ellers.
       */
      public boolean erUbestemt() {
        SampleProvider colorSample = this.sensor.getColorIDMode();
