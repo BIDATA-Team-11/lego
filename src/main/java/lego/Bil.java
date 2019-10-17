@@ -29,6 +29,8 @@ public class Bil {
     Retning state;
     Retning newState;
 
+    boolean accelrationTest;
+
     public Bil(boolean actualMax) {
         /*
         * Inverterer motorene, siden de er montert motsatt av hva som er tiltenkt i APIet.
@@ -40,6 +42,8 @@ public class Bil {
         state = Retning.FRAM;
         left.setAcceleration(Motorhastighet.maxAcc);
         right.setAcceleration(Motorhastighet.maxAcc);
+
+        accelrationTest = false;
     }
 
     private void recalculateSpeeds() {
@@ -59,6 +63,11 @@ public class Bil {
     public void forward() {
       this.recalculateSpeeds();
 
+      if (accelrationTest) {
+          left.setAcceleration(Motorhastighet.maxAcc);
+          right.setAcceleration(Motorhastighet.maxAcc);
+      }
+
       left.setSpeed((int)maxSpeed);
       right.setSpeed((int)maxSpeed);
       left.forward();
@@ -69,6 +78,11 @@ public class Bil {
 
     public void leftTurn() {
         this.recalculateSpeeds();
+
+        if (accelrationTest) {
+          this.setAcceleration(Motorhastighet.minAcc);
+        }
+
         left.setSpeed((int)minSpeed);
         right.setSpeed((int)midSpeed);
         left.forward();
@@ -79,12 +93,22 @@ public class Bil {
 
     public void rightTurn() {
         this.recalculateSpeeds();
+
+        if (accelrationTest) {
+          this.setAcceleration(Motorhastighet.minAcc);
+        }
+
         left.setSpeed((int)midSpeed);
         right.setSpeed((int)minSpeed);
         left.forward();
         right.forward();
 
         System.out.println("RIGHT");
+    }
+
+    private void setAcceleration(int accelration) {
+      this.left.setAcceleration(accelration);
+      this.right.setAcceleration(accelration);
     }
 
     public void update() {
