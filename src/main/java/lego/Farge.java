@@ -91,7 +91,7 @@ public class Farge {
        boolean notBlack = color == Color.BLACK ? false : true;
        boolean notWhite = color != Color.WHITE ? true : false;
        //return notWhite && notBlack ? true : false;
-       return false;
+       return true;
      }
 
     /**
