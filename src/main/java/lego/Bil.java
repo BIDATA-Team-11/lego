@@ -31,21 +31,9 @@ public class Bil {
     public Bil(boolean actualMax) {
         left = MirrorMotor.invertMotor(Motor.A);  // Inverter motorene p* grunn av omdreiningen av v*res kj*ret*y for *
         right = MirrorMotor.invertMotor(Motor.C);  // Gj*re det lettere for oss * kode ved * bruke rett retning
-//        synchronizedMotors = new RegulatedMotor[2];
-//        synchronizedMotors[0] = left;
-//        synchronizedMotors[1] = right;
-//        left.synchronizeWith(synchronizedMotors);
         this.actualMax = actualMax;
         state = Retning.FRAM;
     }
-
-/*    private void sync() {
-      this.left.startSynchronization();
-    }
-
-    public void desync() {
-      this.left.endSynchronization();
-    }*/
 
     private void recalculateSpeeds() {
       if (actualMax) {
@@ -77,7 +65,6 @@ public class Bil {
         left.setSpeed(minSpeed);
         right.setSpeed(midSpeed);
         left.forward();
-        //left.flt();
         right.forward();
 
         System.out.println("LEFT");
@@ -89,17 +76,11 @@ public class Bil {
         right.setSpeed(minSpeed);
         left.forward();
         right.forward();
-        //right.flt();
 
         System.out.println("RIGHT");
     }
 
     public void update() {
-        /*switch(state) {
-          case FRAM:    this.forward(); break;
-          case VENSTRE: this.leftTurn(); break;
-          case HØYRE:   this.rightTurn(); break;
-        }*/
         if (this.state == Retning.FRAM) {
           this.forward();
         } else if (this.state == Retning.VENSTRE) {
