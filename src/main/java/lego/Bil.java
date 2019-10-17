@@ -10,7 +10,7 @@ public class Bil {
     RegulatedMotor C;
 
     public Bil() {
-        A = MirrorMotor.invertMotor(Motor.A);
-        C = MirrorMotor.invertMotor(Motor.C);
+        A = MirrorMotor.invertMotor(Motor.A);  // Inverter motorene på grunn av omdreiningen av våres kjøretøy for å
+        C = MirrorMotor.invertMotor(Motor.C);  // Gjøre det lettere for oss å kode ved å bruke rett retning
     }
 }

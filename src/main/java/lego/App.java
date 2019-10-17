@@ -55,7 +55,7 @@ public class App {
         System.out.printf("%.3f - %.3f\n", farge, fargeKorr);
     }
 
-    public static void start(float svart, Farge fargeSensor, 
+    public static void start(float svart, Farge fargeSensor,
             Farge fargeKorrigering, Bil bil) {
 
         float farge = 0;
@@ -70,15 +70,15 @@ public class App {
 
         int retning = 0;
 
-        bil.A.setSpeed(topSpeed);
+        bil.A.setSpeed(topSpeed);                    //Setter hastighet p� motorene
         bil.C.setSpeed(topSpeed);
 
-        bil.A.setAcceleration(accTopSpeed);
+        bil.A.setAcceleration(accTopSpeed);          //Setter akselerasjon til motorene
         bil.C.setAcceleration(accTopSpeed);
 
-        while (true) {
-            farge = fargeSensor.getFarge();
-            fargeKorr = fargeKorrigering.getFarge();
+        while (true) {                               //While loop som kj�rer hele logikken
+            farge = fargeSensor.getFarge();          //f�r inn fargen sensoren ser
+            fargeKorr = fargeKorrigering.getFarge(); //f�r inn korrigeringen som blir laget vha fargen tidligere f�tt inn
 
             if (farge > svart) {
                 bil.A.setSpeed(topSpeed);
@@ -89,18 +89,18 @@ public class App {
                 // bil.A.setAcceleration(accMinSpeed);
                 // bil.C.setAcceleration(accMinSpeed);
 
-                if (retning == 0) {
+                if (retning == 0) {                  //if logikk for retning
                     // Venstre
                     if (fargeKorr > svart) {
                         retning = 1;
 
-                        // Høyre
+                                                     // Høyre
                     } else if (fargeKorr < svart) {
                         retning = -1;
                     }
                 } else  {
-                    // Venstre
-                    if (retning == 1) { 
+                                                     // Venstre
+                    if (retning == 1) {
                         bil.C.setSpeed(topSpeed);
                         if (farge > (svart + 5)) {
                             bil.A.setSpeed(minSpeed);
@@ -112,7 +112,7 @@ public class App {
                             retning = 0;
                         }
 
-                        // Høyre
+                                                     // Høyre
                     } else if (retning == -1) {
                         bil.A.setSpeed(topSpeed);
                         if (farge > (svart + 5)) {
