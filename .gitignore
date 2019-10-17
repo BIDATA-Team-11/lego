@@ -5,3 +5,10 @@
 build
 jdt.ls-java-project/
 .metadata
+
+# Ignorer testgreier
+*test.java
+*.class
+
+# Dirty hacks
+src/lejos/
