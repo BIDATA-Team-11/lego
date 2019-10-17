@@ -6,9 +6,7 @@ build
 jdt.ls-java-project/
 .metadata
 
-# Ignorer testgreier
-*test.java
+# Jokkes dirty hacks
+/src/lejos/
 *.class
-
-# Dirty hacks
-src/lejos/
+*test.java
