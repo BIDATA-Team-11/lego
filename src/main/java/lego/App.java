@@ -21,7 +21,7 @@ public class App {
      * @param args argumenter man kan gi main funksjonen. Disse blir ikke tatt
      * i betrakning.
      * @throws Exception om en feil oppstår på EV3 maskinen vil en feil bli
-     * kastet. 
+     * kastet.
      */
     public static void main (String[] args) throws Exception {
         Brick brick = BrickFinder.getDefault();
@@ -83,7 +83,7 @@ public class App {
      * @see Farge
      * @see Bil
      */
-    public static void start(float svart, float hvit, Farge fargeSensor, 
+    public static void start(float svart, float hvit, Farge fargeSensor,
             Farge fargeKorrigering, Bil bil) {
 
         float farge = 0;
@@ -98,7 +98,7 @@ public class App {
         int accTopSpeed = 8000;
         int accMinSpeed = 4000;
 
-        int retning = 0;
+        Retning retning = Retning.FRAM;
 
         bil.A.setSpeed(topSpeed);
         bil.C.setSpeed(topSpeed);
@@ -117,18 +117,18 @@ public class App {
                 bil.A.setAcceleration(accMinSpeed);
                 bil.C.setAcceleration(accMinSpeed);
 
-                if (retning == 0) {
+                if (retning == Retning.FRAM) {
                     // Venstre
                     if (fargeKorr > svart) {
-                        retning = 1;
+                        retning = Retning.VENSTRE;
 
                         // Høyre
                     } else if (fargeKorr < svart) {
-                        retning = -1;
+                        retning = Retning.HØYRE;
                     }
                 } else  {
                     // Venstre
-                    if (retning == 1) { 
+                    if (retning == Retning.VENSTRE) {
                         if (timer.elapsed() > 20) {
                             if (farge > fargeSpeed) {
                                 bil.C.setSpeed(topSpeed);
@@ -139,13 +139,13 @@ public class App {
                             }
 
                             if (fargeKorr < svart) {
-                                retning = 0;
+                                retning = Retning.FRAM;
                             }
 
                             timer.reset();
                         }
                         // Høyre
-                    } else if (retning == -1) {
+                    } else if (retning == Retning.HØYRE) {
                         if (farge > fargeSpeed) {
                             bil.A.setSpeed(topSpeed);
                             bil.C.setSpeed(minSpeed);
@@ -157,7 +157,7 @@ public class App {
 
                 }
             } else {
-                retning = 0;
+                retning = Retning.FRAM;
 
                 // TODO: Eventuelt fjerne
                 bil.A.setAcceleration(accTopSpeed);
