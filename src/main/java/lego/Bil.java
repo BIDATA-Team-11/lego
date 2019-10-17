@@ -29,8 +29,6 @@ public class Bil {
     Retning state;
     Retning newState;
 
-    RegulatedMotor[] synchronizedMotors;
-
     public Bil(boolean actualMax) {
         left = MirrorMotor.invertMotor(Motor.A);  // Inverter motorene p* grunn av omdreiningen av v*res kj*ret*y for *
         right = MirrorMotor.invertMotor(Motor.C);  // Gj*re det lettere for oss * kode ved * bruke rett retning
