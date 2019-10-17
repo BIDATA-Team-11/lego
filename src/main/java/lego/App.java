@@ -46,29 +46,24 @@ public class App {
 
             if (knapp == Button.ID_RIGHT) {
             } else if (knapp == Button.ID_LEFT) {
-                fortsett = true;
-                start(svart, hvit, mainSensor, correctionSensor, bil);
             } else if (knapp == Button.ID_DOWN) {
                 mainSensor.printFargeID();
                 correctionSensor.printFargeID();
             } else if (knapp == Button.ID_ENTER) {
-                start(svart, hvit, mainSensor, correctionSensor, bil);
+                start(mainSensor, correctionSensor, bil);
             }
         } while (!fortsett);
     }
 
     /**
      * Starter selve legobilen.
-     * @param svart Floatverdi som representerer svart.
-     * @param hvit Floatverdi som representerer hvit.
      * @param mainSensor Hovedfargesensor. Står midt på fronten på roboten..
      * @param correctionSensor Korrigeringssensor. Står til høyre for hovedfargesensor.
      * @param bil Hjelpeklasse for motorene.
      * @see Farge
      * @see Bil
      */
-    public static void start(float svart, float hvit, Farge mainSensor,
-            Farge correctionSensor, Bil bil) {
+    public static void start(Farge mainSensor, Farge correctionSensor, Bil bil) {
 
         Retning retning = Retning.FRAM;
 
