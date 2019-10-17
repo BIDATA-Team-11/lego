@@ -65,15 +65,22 @@ public class App {
      */
     public static void start(Farge mainSensor, Farge correctionSensor, Bil bil) {
         Retning retning = Retning.FRAM;
-        boolean corrSensorActivated = false;
+
+        /*
+        * Flagg som indikerer at linja befinner seg mellom sensorene. Dette løser en del problemer
+        * med hunting ved at vi unngår å svinge tilbake mot venstre så snart korrigeringssensoren
+        * mister linja. Flagget settes med en gang korrigeringssensoren ser linja, og fjernes så
+        * snart hovedsensoren finner linja igjen.
+        */
+        boolean lineIsBetweenSensors = false;
 
         while (true) {
             if (mainSensor.lostLine()) {
                 if (bil.getState() == Retning.FRAM || correctionSensor.hasLine()) {
                     if (correctionSensor.hasLine()) {
                       bil.setState(Retning.HØYRE);
-                      corrSensorActivated = true;
-                    } else if (!corrSensorActivated) {
+                      lineIsBetweenSensors = true;
+                    } else if (!lineIsBetweenSensors) {
                       bil.setState(Retning.VENSTRE);
                     }
                 }
@@ -81,12 +88,12 @@ public class App {
 
             if (mainSensor.hasLine()) {
               bil.setState(Retning.FRAM);
-              corrSensorActivated = false;
+              lineIsBetweenSensors = false;
             }
 
-            bil.update();
+            bil.update(); // Gi nye instrukser til motorene.
 
-            while (mainSensor.hasLine());
+            while (mainSensor.hasLine()); // Vi trenger ikke sjekke noe så lenge vi ser linja.
         }
     }
 }
