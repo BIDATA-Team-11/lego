@@ -59,7 +59,7 @@ public class App {
     /**
      * Printer verdier fra fargesensorene til LCD..
      * @param fargeSensor Hovedfargesensor, står midt på fronten på roboten (EV3ColorSensor).
-     * @param fargeKorrigering Korrigeringssensor, står til høyre for hovedfargesensor (EV3ColorSensor).
+     * @param fargeKorrigering Korrigeringssensor, står til høyre for hovedsensor (EV3ColorSensor).
      * @see Farge
      */
     public static void printFarge(Farge fargeSensor, Farge fargeKorrigering) {
