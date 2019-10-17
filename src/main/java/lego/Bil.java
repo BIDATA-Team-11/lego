@@ -72,6 +72,9 @@ public class Bil {
       }
     }
 
+    /**
+     * Får legobilen til å bevege seg fremmover.
+     */
     public void forward() {
       this.recalculateSpeeds();
 
@@ -88,6 +91,10 @@ public class Bil {
       System.out.println("FORWARD");
     }
 
+    /**
+     * Får legobilen til å bevege seg mot venstre ved å redusere hastigheten på
+     * det venstre hjul.
+     */
     public void leftTurn() {
         this.recalculateSpeeds();
 
@@ -103,6 +110,10 @@ public class Bil {
         System.out.println("LEFT");
     }
 
+    /**
+     * Får legobilen til å bevege seg mot høyre ved å redusere hastigheten på
+     * det høyre hjul.
+     */
     public void rightTurn() {
         this.recalculateSpeeds();
 
@@ -118,11 +129,19 @@ public class Bil {
         System.out.println("RIGHT");
     }
 
+    /**
+     * Endrer akselerasjonen på motorene.
+     * @param accelration en heltallsverdi som representerer hvor mye man skal
+     * endre akselerasjonen.
+     */
     private void setAcceleration(int accelration) {
       this.left.setAcceleration(accelration);
       this.right.setAcceleration(accelration);
     }
 
+    /**
+     * Oppdaterer motorenes kjøreretning basert på legobilens status.
+     */
     public void update() {
         if (this.state == Direction.FORWARD) {
           this.forward();
@@ -133,14 +152,26 @@ public class Bil {
         }
     }
 
+    /**
+     * Oppdaterer legobilens status. Statusen representerer hvilken retning
+     * legobilen skal bevege seg.
+     * @param state retningen man ønsker legobilen skal kjøre.
+     */
     public void setState(Direction state) {
       this.state = state;
     }
 
+    /**
+     * Henter legobilens retning.
+     * @return bilens status som representerer bilens retning.
+     */
     public Direction getState() {
       return this.state;
     }
 
+    /**
+     * Printer ut de kalkulerte hastighetene.
+     */
     public void printCalculatedSpeeds() {
       this.recalculateSpeeds();
 

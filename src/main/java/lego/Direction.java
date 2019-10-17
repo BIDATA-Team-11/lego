@@ -11,10 +11,21 @@ package lego;
  * @author Gruppe 11, dataingeniør NTNU, første semester.
  * @version 1.0.0
  */
-
-enum Direction {
-  RIGHT,
-  LEFT,
-  FORWARD,
-  STOP
+public enum Direction {
+    /**
+     * Høyre retning
+     */
+    RIGHT,
+    /**
+     * Venstre retning
+     */
+    LEFT,
+    /**
+     * Framover
+     */
+    FORWARD,
+    /**
+     * Stop
+     */
+    STOP
 }
