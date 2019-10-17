@@ -80,10 +80,10 @@ public class Bil {
           right.setAcceleration(Motorhastighet.maxAcc);
       }
 
-      left.setSpeed((int)maxSpeed);
-      right.setSpeed((int)maxSpeed);
-      left.forward();
-      right.forward();
+      this.left.setSpeed((int)maxSpeed);
+      this.right.setSpeed((int)maxSpeed);
+      this.left.forward();
+      this.right.forward();
 
       System.out.println("FORWARD");
     }
@@ -95,10 +95,10 @@ public class Bil {
           this.setAcceleration(Motorhastighet.minAcc);
         }
 
-        left.setSpeed((int)minSpeed);
-        right.setSpeed((int)midSpeed);
-        left.forward();
-        right.forward();
+        this.left.setSpeed((int)minSpeed);
+        this.right.setSpeed((int)midSpeed);
+        this.left.forward();
+        this.right.forward();
 
         System.out.println("LEFT");
     }
@@ -110,10 +110,10 @@ public class Bil {
           this.setAcceleration(Motorhastighet.minAcc);
         }
 
-        left.setSpeed((int)midSpeed);
-        right.setSpeed((int)minSpeed);
-        left.forward();
-        right.forward();
+        this.left.setSpeed((int)midSpeed);
+        this.right.setSpeed((int)minSpeed);
+        this.left.forward();
+        this.right.forward();
 
         System.out.println("RIGHT");
     }
