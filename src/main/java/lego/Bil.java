@@ -6,8 +6,14 @@ import lejos.robotics.RegulatedMotor;
 import lejos.hardware.motor.Motor;
 
 /**
- * Hjelpeklasse som speiler motorene. Bedrer lesbarheten.
+ * Klasse som beskriver motorene og inneholder alle metoder for disse.
+ * @author Stian Selvåg
+ * @author Herman Aagaard
+ * @author Henrik Hafsø
+ * @author Joakim Skogø Langvand
+ * @author Erling Sletta
  * @author Torbjørn Øverås
+ * @author Gruppe 11, dataingeniør NTNU, første semester.
  * @version 1.0.0
  */
 public class Bil {
