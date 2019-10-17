@@ -12,9 +12,9 @@ package lego;
  * @version 1.0.0
  */
 
-enum Retning {
-  HØYRE,
-  VENSTRE,
-  FRAM,
-  STOPP
+enum Direction {
+  RIGHT,
+  LEFT,
+  FORWARD,
+  STOP
 }
