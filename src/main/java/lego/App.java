@@ -37,8 +37,6 @@ public class App {
         Farge mainSensor = new Farge(mainSensorPort);
         Farge correctionSensor = new Farge(correctionSensorPort);
 
-        Bil bil = new Bil(false); // true: kalkulerte hastigheter, false: hardkoda hastigheter.
-
         boolean fortsett = false;
         float svart = 0;
         float hvit = 0;
@@ -47,15 +45,20 @@ public class App {
         System.out.println("Ned:    Les farge (debug)");
         System.out.println("Enter:  Start");
 
+        Bil bil;
+
         do {
             int knapp = Button.waitForAnyEvent();
 
             if (knapp == Button.ID_RIGHT) {
             } else if (knapp == Button.ID_LEFT) {
+                bil = new Bil(true); // true: kalkulerte hastigheter, false: hardkoda hastigheter.
+                start(mainSensor, correctionSensor, bil);
             } else if (knapp == Button.ID_DOWN) {
                 mainSensor.printFargeID();
                 correctionSensor.printFargeID();
             } else if (knapp == Button.ID_ENTER) {
+                bil = new Bil(false); // true: kalkulerte hastigheter, false: hardkoda hastigheter.
                 start(mainSensor, correctionSensor, bil);
             }
         } while (!fortsett);
