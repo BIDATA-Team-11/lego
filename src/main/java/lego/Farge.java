@@ -34,6 +34,8 @@ public class Farge {
 
     /**
      * Testmetode. Printer fargeverdi.
+     * TODO: Kanskje fjerne denne. Da kan vi ta bort mange imports. Må da også fjerne call fra App.java.
+     * @see sensor
      */
      public void printFargeID() {
          EV3 ev3 = (EV3) BrickFinder.getLocal();
