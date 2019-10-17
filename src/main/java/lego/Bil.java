@@ -16,11 +16,15 @@ import lejos.hardware.motor.Motor;
  * @author Gruppe 11, dataingeniør NTNU, første semester.
  * @version 1.0.0
  */
+
 public class Bil {
     RegulatedMotor left;
     RegulatedMotor right;
 
-    boolean actualMax; // Flagg som bestemmer om vi kalkulerer hastigheter eller bruker hardkoding.
+    /*
+    * Flagg som bestemmer om vi kalkulerer hastigheter eller bruker hardkoding.
+    */
+    boolean actualMax;
 
     float maxSpeed;
     float midSpeed;
@@ -29,6 +33,9 @@ public class Bil {
     Direction state;
     Direction newState;
 
+    /*
+    * Flagg som bestemmer om vi bruker stegvis akselerasjon. Dette vil muligens begrense hunting.
+    */
     boolean accelrationTest;
 
     /**
@@ -171,6 +178,8 @@ public class Bil {
      * @see state
      */
     public void setState(Direction state) {
+      // TODO: Dersom vi bruker f.eks. state og nextState kan vi roe ned på API-calls til motorer.
+      //       Avhengig av API er implementert i API kan bevegelsene kanskje bli mindre hakkete.
       this.state = state;
     }
 
