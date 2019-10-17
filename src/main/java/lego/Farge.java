@@ -21,7 +21,7 @@ import lejos.hardware.ev3.EV3;
  * @version 1.0.0
  */
 public class Farge {
-    private EV3ColorSensor sensor;
+    public EV3ColorSensor sensor;
 
     /**
      * Konstuerer en ny EV3ColorSensor fra LejOS API.

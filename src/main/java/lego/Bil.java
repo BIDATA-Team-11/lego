@@ -16,27 +16,26 @@ import lejos.hardware.motor.Motor;
  * @author Gruppe 11, dataingeniør NTNU, første semester.
  * @version 1.0.0
  */
-
 public class Bil {
-    RegulatedMotor left;
-    RegulatedMotor right;
+    public RegulatedMotor left;
+    public RegulatedMotor right;
 
     /*
     * Flagg som bestemmer om vi kalkulerer hastigheter eller bruker hardkoding.
     */
-    boolean actualMax;
+    public boolean actualMax;
 
-    float maxSpeed;
-    float midSpeed;
-    float minSpeed;
+    public float maxSpeed;
+    public float midSpeed;
+    public float minSpeed;
 
-    Direction state;
-    Direction newState;
+    public Direction state;
+    public Direction newState;
 
     /*
     * Flagg som bestemmer om vi bruker stegvis akselerasjon. Dette vil muligens begrense hunting.
     */
-    boolean accelrationTest;
+    public boolean accelrationTest;
 
     /**
      * Konstuerer en ny Bil.
