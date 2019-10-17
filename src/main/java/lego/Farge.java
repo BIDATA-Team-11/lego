@@ -90,7 +90,8 @@ public class Farge {
        int color = (int)sample[0];
        boolean notBlack = color == Color.BLACK ? false : true;
        boolean notWhite = color != Color.WHITE ? true : false;
-       return notWhite && notBlack ? true : false;
+       //return notWhite && notBlack ? true : false;
+       return false;
      }
 
     /**
