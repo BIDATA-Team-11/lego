@@ -72,7 +72,7 @@ public class Farge {
       * Metode for å se om sensoren ser svart.
       * @return True hvis sensoren ser svart, false ellers.
       */
-     public boolean erSvart() {
+     public boolean hasLine() {
        SampleProvider colorSample = this.sensor.getColorIDMode();
        float[] sample = new float[colorSample.sampleSize()];
        colorSample.fetchSample(sample, 0);
@@ -92,6 +92,10 @@ public class Farge {
        boolean notWhite = color != Color.WHITE ? true : false;
        //return notWhite && notBlack ? true : false;
        return true;
+     }
+
+     public boolean lostLine() {
+       return !this.hasLine();
      }
 
     /**

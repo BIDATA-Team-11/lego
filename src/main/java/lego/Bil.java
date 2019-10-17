@@ -21,6 +21,7 @@ public class Bil {
     int minSpeed;
 
     Retning state;
+    Retning newState;
 
     RegulatedMotor[] synchronizedMotors;
 
@@ -67,26 +68,53 @@ public class Bil {
       right.setSpeed(maxSpeed);
       left.forward();
       right.forward();
+
+      System.out.println("FORWARD");
     }
 
     public void leftTurn() {
-      if (state != Retning.VENSTRE) {
         this.recalculateSpeeds();
-        left.setSpeed(midSpeed);
+        left.setSpeed(minSpeed);
+        right.setSpeed(midSpeed);
         left.forward();
-      } else {
-        state = Retning.VENSTRE;
-      }
+        //left.flt();
+        right.forward();
+
+        System.out.println("LEFT");
     }
 
     public void rightTurn() {
-      if (state != Retning.HØYRE) {
         this.recalculateSpeeds();
-        right.setSpeed(midSpeed);
+        left.setSpeed(midSpeed);
+        right.setSpeed(minSpeed);
+        left.forward();
         right.forward();
-      } else {
-        state = Retning.HØYRE;
-      }
+        //right.flt();
+
+        System.out.println("RIGHT");
+    }
+
+    public void update() {
+        /*switch(state) {
+          case FRAM:    this.forward(); break;
+          case VENSTRE: this.leftTurn(); break;
+          case HØYRE:   this.rightTurn(); break;
+        }*/
+        if (this.state == Retning.FRAM) {
+          this.forward();
+        } else if (this.state == Retning.VENSTRE) {
+          this.leftTurn();
+        } else if (this.state == Retning.HØYRE) {
+          this.rightTurn();
+        }
+    }
+
+    public void setState(Retning state) {
+      this.state = state;
+    }
+
+    public Retning getState() {
+      return this.state;
     }
 
     public void printCalculatedSpeeds() {

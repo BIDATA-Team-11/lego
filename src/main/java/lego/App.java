@@ -39,7 +39,7 @@ public class App {
 
         System.out.println("Versjon 1.0.0-awesomebot");
         System.out.println("Ned:    Les farge (debug)");
-        System.out.println("Enter:  Kjør");
+        System.out.println("Enter:  Start");
         //System.out.println();
         //System.out.println("Debug:");
         //bil.printCalculatedSpeeds();
@@ -56,6 +56,7 @@ public class App {
                 start(svart, hvit, mainSensor, correctionSensor, bil);
             } else if (knapp == Button.ID_DOWN) {
                 mainSensor.printFargeID();
+                correctionSensor.printFargeID();
             } else if (knapp == Button.ID_ENTER) {
                 start(svart, hvit, mainSensor, correctionSensor, bil);
             }
@@ -86,71 +87,38 @@ public class App {
         Stopwatch timer = new Stopwatch();
         timer.reset();
 
-        while (true) {
-            if (!mainSensor.erSvart()) {
-                // TODO: Eventuelt fjerne
-                //bil.left.setAcceleration(Motorhastighet.minAcc);
-                //bil.right.setAcceleration(Motorhastighet.minAcc);
+        boolean corrSensorActivated = false;
 
-                if (retning == Retning.FRAM || correctionSensor.erSvart()) {
-                    if (correctionSensor.erSvart()) {
-                      retning = retning.VENSTRE;
-                      System.out.println("VENSTRE");
-                    } else {
-                      retning = retning.HØYRE;
-                      System.out.println("HØYRE");
+        while (true) {
+            if (mainSensor.lostLine()) {
+                if (bil.getState() == Retning.FRAM || correctionSensor.hasLine()) {
+                    if (correctionSensor.hasLine()) {
+                      bil.setState(Retning.HØYRE);
+                    } else if (!corrSensorActivated) {
+                      bil.setState(Retning.VENSTRE);
                     }
                 }
-
-                if (retning == retning.VENSTRE) {
-                  bil.leftTurn();
-                } else if (retning == retning.HØYRE) {
-                  bil.rightTurn();
-                }
-
-    /*                if (retning == Retning.VENSTRE) {
-                        if (timer.elapsed() > 20) {
-                            if (mainSensor.erUbestemt()) {
-                                bil.right.setSpeed(Motorhastighet.max);
-                                bil.left.setSpeed(Motorhastighet.min);
-                            } else {
-                                bil.right.setSpeed(Motorhastighet.max);
-                                bil.left.setSpeed(Motorhastighet.mid);
-                            }
-
-                            if (correctionSensor.erSvart()) {
-                                retning = Retning.FRAM;
-                            }
-
-                            timer.reset();
-                        }
-                    } else if (retning == Retning.HØYRE) {
-                        if (mainSensor.erUbestemt()) {
-                            bil.left.setSpeed(Motorhastighet.max);
-                            bil.right.setSpeed(Motorhastighet.min);
-                        } else {
-                            bil.left.setSpeed(Motorhastighet.max);
-                            bil.right.setSpeed(Motorhastighet.mid);
-                        }*/
-
-                //}
-            } else {
-                retning = Retning.FRAM;
-                System.out.println("FRAM");
-
-                // TODO: Eventuelt fjerne
-                //bil.left.setAcceleration(Motorhastighet.maxAcc);
-                //bil.right.setAcceleration(Motorhastighet.maxAcc);
-
-                //bil.left.setSpeed(Motorhastighet.max);
-                //bil.right.setSpeed(Motorhastighet.max);
             }
 
-            if (retning == Retning.FRAM) {
-              bil.forward();
+            if (mainSensor.hasLine()) {
+              bil.setState(Retning.FRAM);
+              corrSensorActivated = false;
             }
 
-            while (mainSensor.erSvart());
+            if (mainSensor.lostLine()) {
+              //if (correctionSensor.lostLine() && bil.getState() == Retning.HØYRE) {
+              //  bil.setState(Retning.VENSTRE);
+              //}
+
+              if (correctionSensor.hasLine()) {
+                bil.setState(Retning.HØYRE);
+                corrSensorActivated = true;
+              }
+            }
+
+            bil.update();
+
+            //while (mainSensor.hasLine());
         }
     }
 }
