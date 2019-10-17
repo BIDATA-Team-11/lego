@@ -105,20 +105,4 @@ public class Farge {
        boolean notWhite = color != Color.WHITE ? true : false;
        return notWhite && notBlack ? true : false;
      }
-
-    /**
-     * Kalibrerer hva fargesensoren ser på i det øyeblikket denne funksjonen
-     * blir utløst.
-     * @return en float som representerer den fargen som fargesensoren ser på.
-     */
-    public float kalibrering() {
-        for (int i = 0; i < 100; ++i) {
-            this.fargeLeser.fetchSample(this.fargeSample, 0);
-            svart += this.fargeSample[0] * 100;
-        }
-
-        // return ((svart / 100) + 2);
-        return ((svart / 100) + 2);
-        // return (svart / 100);
-    }
 }

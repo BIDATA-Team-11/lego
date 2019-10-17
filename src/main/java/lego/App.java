@@ -40,17 +40,11 @@ public class App {
         System.out.println("Versjon 1.0.0-awesomebot");
         System.out.println("Ned:    Les farge (debug)");
         System.out.println("Enter:  Start");
-        //System.out.println();
-        //System.out.println("Debug:");
-        //bil.printCalculatedSpeeds();
 
         do {
             int knapp = Button.waitForAnyEvent();
 
             if (knapp == Button.ID_RIGHT) {
-                svart = mainSensor.kalibrering();
-                hvit = correctionSensor.kalibrering();
-                System.out.println("Ferdig kalibrert");
             } else if (knapp == Button.ID_LEFT) {
                 fortsett = true;
                 start(svart, hvit, mainSensor, correctionSensor, bil);
