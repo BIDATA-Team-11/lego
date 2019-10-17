@@ -64,18 +64,7 @@ public class App {
      * @see Bil
      */
     public static void start(Farge mainSensor, Farge correctionSensor, Bil bil) {
-
         Retning retning = Retning.FRAM;
-
-        //bil.left.setSpeed(Motorhastighet.max);
-        //bil.right.setSpeed(Motorhastighet.max);
-
-        bil.left.setAcceleration(Motorhastighet.maxAcc);
-        bil.right.setAcceleration(Motorhastighet.maxAcc);
-
-        Stopwatch timer = new Stopwatch();
-        timer.reset();
-
         boolean corrSensorActivated = false;
 
         while (true) {

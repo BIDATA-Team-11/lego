@@ -36,6 +36,8 @@ public class Bil {
         right = MirrorMotor.invertMotor(Motor.C);  // Gj*re det lettere for oss * kode ved * bruke rett retning
         this.actualMax = actualMax;
         state = Retning.FRAM;
+        left.setAcceleration(Motorhastighet.maxAcc);
+        right.setAcceleration(Motorhastighet.maxAcc);
     }
 
     private void recalculateSpeeds() {
