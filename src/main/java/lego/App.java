@@ -72,6 +72,7 @@ public class App {
                 if (bil.getState() == Retning.FRAM || correctionSensor.hasLine()) {
                     if (correctionSensor.hasLine()) {
                       bil.setState(Retning.HØYRE);
+                      corrSensorActivated = true;
                     } else if (!corrSensorActivated) {
                       bil.setState(Retning.VENSTRE);
                     }
@@ -83,20 +84,9 @@ public class App {
               corrSensorActivated = false;
             }
 
-            if (mainSensor.lostLine()) {
-              //if (correctionSensor.lostLine() && bil.getState() == Retning.HØYRE) {
-              //  bil.setState(Retning.VENSTRE);
-              //}
-
-              if (correctionSensor.hasLine()) {
-                bil.setState(Retning.HØYRE);
-                corrSensorActivated = true;
-              }
-            }
-
             bil.update();
 
-            //while (mainSensor.hasLine());
+            while (mainSensor.hasLine());
         }
     }
 }
