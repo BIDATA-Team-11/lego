@@ -64,7 +64,6 @@ public class App {
      * @see Bil
      */
     public static void start(Farge mainSensor, Farge correctionSensor, Bil bil) {
-        Retning retning = Retning.FRAM;
 
         /*
         * Flagg som indikerer at linja befinner seg mellom sensorene. Dette løser en del problemer
