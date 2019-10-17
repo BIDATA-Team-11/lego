@@ -49,29 +49,13 @@ public class App {
                 fortsett = true;
                 start(svart, hvit, fargeSensor, fargeKorrigering, bil);
             }else if (knapp == Button.ID_UP) {
-                printFarge(fargeSensor, fargeKorrigering);
+                //printFarge(fargeSensor, fargeKorrigering);
             } else if (knapp == Button.ID_DOWN) {
                 fortsett = true;
             } else if (knapp == Button.ID_ENTER) {
                 fargeSensor.printFargeID();
             }
         } while (!fortsett);
-    }
-
-    /**
-     * Printer verdier fra fargesensorene til LCD..
-     * @param fargeSensor Hovedfargesensor, står midt på fronten på roboten (EV3ColorSensor).
-     * @param fargeKorrigering Korrigeringssensor, står til høyre for hovedsensor (EV3ColorSensor).
-     * @see Farge
-     */
-    public static void printFarge(Farge fargeSensor, Farge fargeKorrigering) {
-        float farge = 0;
-        float fargeKorr = 0;
-
-        farge = fargeSensor.getFarge();
-        fargeKorr = fargeKorrigering.getFarge();
-
-        System.out.printf("%.3f - %.3f\n", farge, fargeKorr);
     }
 
     /**
@@ -87,11 +71,6 @@ public class App {
     public static void start(float svart, float hvit, Farge fargeSensor,
             Farge fargeKorrigering, Bil bil) {
 
-        float farge = 0;
-        float fargeKorr = 0;
-
-        float fargeSpeed = ((hvit - svart) * 0.65f) + svart;
-
         Retning retning = Retning.FRAM;
 
         bil.A.setSpeed(Motorhastighet.max);
@@ -103,28 +82,21 @@ public class App {
         timer.reset();
 
         while (true) {
-            farge = fargeSensor.getFarge();
-            fargeKorr = fargeKorrigering.getFarge();
-
-            if (farge > svart) {
+            if (!fargeSensor.erSvart()) {
                 // TODO: Eventuelt fjerne
                 bil.A.setAcceleration(Motorhastighet.minAcc);
                 bil.C.setAcceleration(Motorhastighet.minAcc);
 
                 if (retning == Retning.FRAM) {
-                    // Venstre
-                    if (fargeKorr > svart) {
+                    if (!fargeKorrigering.erSvart()) {
                         retning = Retning.VENSTRE;
-
-                        // Høyre
-                    } else if (fargeKorr < svart) {
+                    } else {
                         retning = Retning.HØYRE;
                     }
                 } else  {
-                    // Venstre
                     if (retning == Retning.VENSTRE) {
                         if (timer.elapsed() > 20) {
-                            if (farge > fargeSpeed) {
+                            if (fargeSensor.erUbestemt()) {
                                 bil.C.setSpeed(Motorhastighet.max);
                                 bil.A.setSpeed(Motorhastighet.min);
                             } else {
@@ -132,15 +104,14 @@ public class App {
                                 bil.A.setSpeed(Motorhastighet.mid);
                             }
 
-                            if (fargeKorr < svart) {
+                            if (fargeKorrigering.erSvart()) {
                                 retning = Retning.FRAM;
                             }
 
                             timer.reset();
                         }
-                        // Høyre
                     } else if (retning == Retning.HØYRE) {
-                        if (farge > fargeSpeed) {
+                        if (fargeSensor.erUbestemt()) {
                             bil.A.setSpeed(Motorhastighet.max);
                             bil.C.setSpeed(Motorhastighet.min);
                         } else {

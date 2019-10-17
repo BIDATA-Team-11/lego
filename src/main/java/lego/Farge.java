@@ -45,8 +45,7 @@ public class Farge {
     }
 
     /**
-     * Henter ut fargeverdi som sensoren ser.
-     * øyeblikket.
+     * Testmetode. Printer fargeverdi.
      */
      public void printFargeID() {
          EV3 ev3 = (EV3) BrickFinder.getLocal();
@@ -67,7 +66,31 @@ public class Farge {
              case Color.BROWN: colorName = "BROWN"; break;
          }
          System.out.println(colorId + " - " + colorName);
-         keys.waitForAnyPress();
+     }
+
+     /**
+      * Metode for å se om sensoren ser svart.
+      * @return True hvis sensoren ser svart, false ellers.
+      */
+     public boolean erSvart() {
+       SampleProvider colorSample = this.sensor.getColorIDMode();
+       float[] sample = new float[colorSample.sampleSize()];
+       colorSample.fetchSample(sample, 0);
+       return (int)sample[0] == Color.BLACK ? true : false;
+     }
+
+     /**
+      * Metode for å se om sensoren ser svart.
+      * @return True hvis sensoren ser svart, false ellers.
+      */
+     public boolean erUbestemt() {
+       SampleProvider colorSample = this.sensor.getColorIDMode();
+       float[] sample = new float[colorSample.sampleSize()];
+       colorSample.fetchSample(sample, 0);
+       int color = (int)sample[0];
+       boolean notBlack = color == Color.BLACK ? false : true;
+       boolean notWhite = color != Color.WHITE ? true : false;
+       return notWhite && notBlack ? true : false;
      }
 
     /**
