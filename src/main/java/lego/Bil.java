@@ -3,7 +3,7 @@ package lego;
 import lejos.hardware.port.Port;
 import lejos.robotics.MirrorMotor;
 import lejos.robotics.RegulatedMotor;
-import lejos.hardware.motor.*;
+import lejos.hardware.motor.Motor;
 
 /**
  * Hjelpeklasse som speiler motorene. Bedrer lesbarheten.
