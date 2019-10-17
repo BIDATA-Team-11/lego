@@ -20,7 +20,7 @@ public class Bil {
     RegulatedMotor left;
     RegulatedMotor right;
 
-    boolean actualMax; // Whether to use calculated speeds or speeds set in config
+    boolean actualMax; // Flagg som bestemmer om vi kalkulerer hastigheter eller bruker hardkoding.
 
     float maxSpeed;
     float midSpeed;
@@ -30,9 +30,13 @@ public class Bil {
     Retning newState;
 
     public Bil(boolean actualMax) {
-        left = MirrorMotor.invertMotor(Motor.A);  // Inverter motorene p* grunn av omdreiningen av v*res kj*ret*y for *
-        right = MirrorMotor.invertMotor(Motor.C);  // Gj*re det lettere for oss * kode ved * bruke rett retning
-        this.actualMax = actualMax;
+        /*
+        * Inverterer motorene, siden de er montert motsatt av hva som er tiltenkt i APIet.
+        */
+        left = MirrorMotor.invertMotor(Motor.A);
+        right = MirrorMotor.invertMotor(Motor.C);
+
+        this.actualMax = actualMax; // Bruker kalkulerte verdier hvis satt til true.
         state = Retning.FRAM;
         left.setAcceleration(Motorhastighet.maxAcc);
         right.setAcceleration(Motorhastighet.maxAcc);
