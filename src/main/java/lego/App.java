@@ -37,14 +37,14 @@ public class App {
         Farge mainSensor = new Farge(mainSensorPort);
         Farge correctionSensor = new Farge(correctionSensorPort);
 
-        System.out.println("v. 1.0.0-awesomebot");
+        System.out.println("v. 1.1.0-awesomebot");
         System.out.println("Ned:    Les farge (debug)");
         System.out.println("Enter:  Start");
 
         Bil bil;
 
         do {
-            int knapp = Button.waitForAnyEvent();
+            int knapp = Button.waitForAnyPress();
 
             if (knapp == Button.ID_RIGHT) {
             } else if (knapp == Button.ID_LEFT) {
@@ -85,6 +85,8 @@ public class App {
         */
         boolean lineIsBetweenSensors = false;
 
+        int button;
+
         /*
         * "Hovedløkka" i programmet. Denne kjører til vi dreper den.
         *
@@ -119,9 +121,10 @@ public class App {
 
             bil.update();
 
-            if (testWhile) {
-              while (mainSensor.hasLine());
-            }
+/*            button = Button.waitForAnyPress(10);
+            if (button == Button.ID_ESCAPE) {
+              break;
+            }*/
         }
     }
 }
