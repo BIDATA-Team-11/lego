@@ -58,6 +58,10 @@ public class App {
                 start(mainSensor, correctionSensor, bil);
             }
         } while (true);
+        /*
+        * TODO: Bruker while-løkke her så det kan gjøres mulig å legge inn en escape i hovedløkka,
+        *       sånn at det kan bli mulig å stoppe og starte roboten uten å drepe programmet.
+        */
     }
 
     /**
