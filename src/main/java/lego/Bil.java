@@ -17,25 +17,25 @@ import lejos.hardware.motor.Motor;
  * @version 1.0.0
  */
 public class Bil {
-    public RegulatedMotor left;
-    public RegulatedMotor right;
+    private RegulatedMotor left;
+    private RegulatedMotor right;
 
     /*
     * Flagg som bestemmer om vi kalkulerer hastigheter eller bruker hardkoding.
     */
-    public boolean actualMax;
+    private boolean actualMax;
 
-    public float maxSpeed;
-    public float midSpeed;
-    public float minSpeed;
+    private float maxSpeed;
+    private float midSpeed;
+    private float minSpeed;
 
-    public Direction state;
-    public Direction newState;
+    private Direction state;
+    private Direction newState;
 
     /*
     * Flagg som bestemmer om vi bruker stegvis akselerasjon. Dette vil muligens begrense hunting.
     */
-    public boolean accelrationTest;
+    private boolean accelrationTest;
 
     /**
      * Konstuerer en ny Bil.
@@ -58,11 +58,6 @@ public class Bil {
 
     /**
      * Rekalkulerer hastigheter. Denne er aktuell dersom actualMax ser satt til true.
-     * @see maxSpeed
-     * @see midSpeed
-     * @see minSpeed
-     * @see left
-     * @see right
      */
     private void recalculateSpeeds() {
       if (actualMax) {
@@ -80,10 +75,6 @@ public class Bil {
 
     /**
      * Setter motorene til å gå framover. Full hastighet.
-     * @see maxSpeed
-     * @see left
-     * @see right
-     * @see accelrationTest
      */
     public void forward() {
       this.recalculateSpeeds();
@@ -103,11 +94,6 @@ public class Bil {
 
     /**
      * Setter motorene til å svinge mot venstre.
-     * @see midSpeed
-     * @see minSpeed
-     * @see left
-     * @see right
-     * @see accelrationTest
      */
     public void leftTurn() {
         this.recalculateSpeeds();
@@ -126,11 +112,6 @@ public class Bil {
 
     /**
      * Setter motorene til å svinge mot høyre.
-     * @see midSpeed
-     * @see minSpeed
-     * @see left
-     * @see right
-     * @see accelrationTest
      */
     public void rightTurn() {
         this.recalculateSpeeds();
@@ -150,8 +131,6 @@ public class Bil {
     /**
      * Setter akselerasjon på begge motorer.
      * @param accelration Akselerasjon
-     * @see left
-     * @see right
      */
     private void setAcceleration(int accelration) {
       this.left.setAcceleration(accelration);
@@ -174,7 +153,6 @@ public class Bil {
     /**
      * Setter status for objektet, ingen forandring før update() kalles.
      * @param state Status i form av en Direction-verdi.
-     * @see state
      */
     public void setState(Direction state) {
       // TODO: Dersom vi bruker f.eks. state og nextState kan vi roe ned på API-calls til motorer.
@@ -184,7 +162,6 @@ public class Bil {
 
     /**
      * Returnerer status til objektet. OBS: dette er ikke nødvendigvis aktiv status, dersom status er forandra siden forrige update().
-     * @see state
      * @return state Status som vil være aktiv etter neste update().
      */
     public Direction getState() {
@@ -193,9 +170,6 @@ public class Bil {
 
     /**
      * Printer maks hastighet rapportert av EV3, multiplisert med faktorer oppgitt i konfigurasjonsfil, til display. Returnerer ingenting. Denne kan brukes til debugging, og er aktuell dersom det brukes kalkulerte hastigheter i stedet for hastigheter satt i konfigurasjonsfil.
-     * @see maxSpeed
-     * @see midSpeed
-     * @see minSpeed
      */
     public void printCalculatedSpeeds() {
       this.recalculateSpeeds();

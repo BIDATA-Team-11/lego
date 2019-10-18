@@ -21,12 +21,11 @@ import lejos.hardware.ev3.EV3;
  * @version 1.0.0
  */
 public class Farge {
-    public EV3ColorSensor sensor;
+    private EV3ColorSensor sensor;
 
     /**
      * Konstuerer en ny EV3ColorSensor fra LejOS API.
      * @param port Fysisk port på EV3-maskinen.
-     * @see Port
      */
     public Farge(Port port) {
         sensor = new EV3ColorSensor(port);
@@ -35,7 +34,6 @@ public class Farge {
     /**
      * Testmetode. Printer fargeverdi.
      * TODO: Kanskje fjerne denne. Da kan vi ta bort mange imports. Må da også fjerne call fra App.java.
-     * @see sensor
      */
      public void printFargeID() {
          EV3 ev3 = (EV3) BrickFinder.getLocal();
@@ -61,7 +59,6 @@ public class Farge {
      /**
       * Metode for å se om sensoren ser svart.
       * @return True hvis sensoren ser svart, false ellers.
-      * @see sensor
       */
      public boolean hasLine() {
        SampleProvider colorSample = this.sensor.getColorIDMode();
@@ -80,7 +77,6 @@ public class Farge {
 
      /**
       * Metode for å se om sensoren ser svart. Denne er ubrukt i Awesomebot!
-      * @see sensor
       * @return True hvis sensoren ser noe annet enn svart eller hvit, false ellers.
       */
      public boolean erUbestemt() {
