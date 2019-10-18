@@ -1,3 +1,15 @@
+/**
+ * LejOS Klient for Legobilprosjekt 2019
+ * @author Stian Selvåg
+ * @author Herman Aagaard
+ * @author Henrik Hafsø
+ * @author Joakim Skogø Langvand
+ * @author Erling Sletta
+ * @author Torbjørn Øverås
+ * @author Gruppe 11, dataingeniør NTNU, første semester.
+ * @version 1.1.0
+ */
+
 package lego;
 
 import lejos.robotics.RegulatedMotor;
@@ -9,17 +21,6 @@ import lejos.utility.Stopwatch;
 
 import lejos.hardware.Button;
 
-/**
- * LejOS Klient for Legobilprosjekt 2019
- * @author Stian Selvåg
- * @author Herman Aagaard
- * @author Henrik Hafsø
- * @author Joakim Skogø Langvand
- * @author Erling Sletta
- * @author Torbjørn Øverås
- * @author Gruppe 11, dataingeniør NTNU, første semester.
- * @version 1.0.0
- */
 public class App {
     /**
      * Main-metode for klienten. Her får man valget om å printe ut de fargene sensorene ser, kalibrere fargesensorene eller å få bilen til å kjøre.
