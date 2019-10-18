@@ -1,10 +1,3 @@
-package lego;
-
-import lejos.hardware.port.Port;
-import lejos.robotics.MirrorMotor;
-import lejos.robotics.RegulatedMotor;
-import lejos.hardware.motor.Motor;
-
 /**
  * Klasse som beskriver motorene og inneholder alle metoder for disse.
  * @author Stian Selvåg
@@ -14,8 +7,16 @@ import lejos.hardware.motor.Motor;
  * @author Erling Sletta
  * @author Torbjørn Øverås
  * @author Gruppe 11, dataingeniør NTNU, første semester.
- * @version 1.0.0
+ * @version 1.1.0
  */
+
+ package lego;
+
+import lejos.hardware.port.Port;
+import lejos.robotics.MirrorMotor;
+import lejos.robotics.RegulatedMotor;
+import lejos.hardware.motor.Motor;
+
 public class Bil {
     private RegulatedMotor left;
     private RegulatedMotor right;

@@ -1,3 +1,15 @@
+/**
+ * Hjelpeklasse for fargesensorene i LejOS API.
+ * @author Stian Selvåg
+ * @author Herman Aagaard
+ * @author Henrik Hafsø
+ * @author Joakim Skogø Langvand
+ * @author Erling Sletta
+ * @author Torbjørn Øverås
+ * @author Gruppe 11, dataingeniør NTNU, første semester.
+ * @version 1.1.0
+ */
+
 package lego;
 
 import lejos.hardware.sensor.EV3ColorSensor;
@@ -9,17 +21,6 @@ import lejos.hardware.BrickFinder;
 import lejos.hardware.Keys;
 import lejos.hardware.ev3.EV3;
 
-/**
- * Hjelpeklasse for fargesensorene i LejOS API.
- * @author Stian Selvåg
- * @author Herman Aagaard
- * @author Henrik Hafsø
- * @author Joakim Skogø Langvand
- * @author Erling Sletta
- * @author Torbjørn Øverås
- * @author Gruppe 11, dataingeniør NTNU, første semester.
- * @version 1.0.0
- */
 public class Farge {
     private EV3ColorSensor sensor;
 

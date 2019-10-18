@@ -1,5 +1,3 @@
-package lego;
-
 /**
  * Hjelpeklasse for å sette motorhastigheter og akselerasjon.
  * @author Stian Selvåg
@@ -9,8 +7,11 @@ package lego;
  * @author Erling Sletta
  * @author Torbjørn Øverås
  * @author Gruppe 11, dataingeniør NTNU, første semester.
- * @version 1.0.0
+ * @version 1.1.0
  */
+
+ package lego;
+
 public class Motorhastighet {
     /**
      * Størst hastighet
