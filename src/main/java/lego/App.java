@@ -37,8 +37,6 @@ public class App {
         Farge mainSensor = new Farge(mainSensorPort);
         Farge correctionSensor = new Farge(correctionSensorPort);
 
-        boolean fortsett = false;
-
         System.out.println("v. 1.0.0-awesomebot");
         System.out.println("Ned:    Les farge (debug)");
         System.out.println("Enter:  Start");
@@ -59,7 +57,7 @@ public class App {
                 bil = new Bil(false); // true: kalkulerte hastigheter, false: hardkoda hastigheter.
                 start(mainSensor, correctionSensor, bil);
             }
-        } while (!fortsett);
+        } while (true);
     }
 
     /**
