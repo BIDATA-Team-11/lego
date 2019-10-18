@@ -60,10 +60,10 @@ public class Motorhastighet {
     /**
      * Middels hastighet (faktor)
      */
-    public final static float midSpeedFactor = 0.95f;
+    public final static float midSpeedFactor = 0.95f+0.3f;
 
     /**
      * Lav hastighet (faktor)
      */
-    public final static float minSpeedFactor = 0.30f;
+    public final static float minSpeedFactor = 0.30f+0.3f;
 }
