@@ -13,31 +13,36 @@
  package lego;
 
 public class Motorhastighet {
+
     /**
      * Størst hastighet
      */
     public final static int max = 1000; // Full fart framover
+
     /**
-     * Middels hastighet
+     * Middels hastighet (hastighet på "ytterhjul" i svinger)
      */
-    public final static int mid = 600; // Svinghastighet (høy)
+    public final static int mid = 600;
+
     /**
-     * Laveste hastighet
+     * Lav hastighet (hastighet på "innerhjul" i svinger)
      */
-    public final static int min = 250; // Svinghastighet (lav)
+    public final static int min = 250;
 
     /*
-     * Disse brukes dersom flagget accelrationTest settes i Bil.java.
+     * Konstantene nedenfor brukes dersom flagget accelrationTest settes i Bil.java.
      *
      * maxAcc brukes når roboten går fra svinghastighet og opp.
      * minAcc brukes når roboten går fra topphastighet ned til svinghastighet.
      */
+
     /**
-     * Størst akelerasjon  hastighet
+     * Største akelerasjonshastighet
      */
     public final static int maxAcc = 8000; // Akselrasjon lav->høy
+
     /**
-     * Størst akelerasjon  hastighet
+     * Laveste akelerasjon shastighet
      */
     public final static int minAcc = 4000; // Akselrasjon høy->lav
 
@@ -46,16 +51,19 @@ public class Motorhastighet {
      *
      * Hver variabel representerer en andel av EV3s rapporterte makshastighet basert på batteri, etc.
      */
+
     /**
      * Størst hastighet (faktor)
      */
     public final static float maxSpeedFactor = 1.2f;
+
     /**
      * Middels hastighet (faktor)
      */
-    public final static float midSpeedFactor = 0.85f;
+    public final static float midSpeedFactor = 0.9f;
+    
     /**
-     * Lavest hastighet (faktor)
+     * Lav hastighet (faktor)
      */
     public final static float minSpeedFactor = 0.30f;
 }
