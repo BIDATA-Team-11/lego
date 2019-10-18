@@ -37,8 +37,8 @@ public class App {
         Farge mainSensor = new Farge(mainSensorPort);
         Farge correctionSensor = new Farge(correctionSensorPort);
 
-        System.out.println("v. 1.1.0-awesomebot");
-        System.out.println("Ned:    Les farge (debug)");
+        System.out.println("1.1.0-awesomebot");
+        System.out.println("Ned:    Les farge");
         System.out.println("Enter:  Start");
 
         Bil bil;
