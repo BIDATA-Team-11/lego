@@ -40,6 +40,7 @@ public class App {
         System.out.println("1.1.0-awesomebot");
         System.out.println("Ned:    Les farge");
         System.out.println("Enter:  Start");
+        System.out.println("Opp:  Hardkoda");
 
         Bil bil;
 
@@ -54,8 +55,8 @@ public class App {
                 mainSensor.printFargeID();
                 correctionSensor.printFargeID();
             } else if (knapp == Button.ID_UP) {
-              bil = new Bil(true); // true: kalkulerte hastigheter, false: hardkoda hastigheter.
-              start(mainSensor, correctionSensor, bil, true);
+              bil = new Bil(false); // true: kalkulerte hastigheter, false: hardkoda hastigheter.
+              start(mainSensor, correctionSensor, bil, false);
             } else if (knapp == Button.ID_ENTER) {
                 bil = new Bil(false); // true: kalkulerte hastigheter, false: hardkoda hastigheter.
                 start(mainSensor, correctionSensor, bil, false);
