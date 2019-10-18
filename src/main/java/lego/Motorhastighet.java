@@ -46,15 +46,15 @@ public class Motorhastighet {
      * Hver variabel representerer en andel av EV3s rapporterte makshastighet basert på batteri, etc.
      */
     /**
-     * Størst akelerasjon faktor
+     * Størst hastighet (faktor)
      */
-    public final static float maxSpeedFactor = 1.0f;
+    public final static float maxSpeedFactor = 1.2f;
     /**
-     * Middels akelerasjon faktor
+     * Middels hastighet (faktor)
      */
-    public final static float midSpeedFactor = 0.7f;
+    public final static float midSpeedFactor = 0.85f;
     /**
-     * Lavest akelerasjon faktor
+     * Lavest hastighet (faktor)
      */
-    public final static float minSpeedFactor = 0.2f;
+    public final static float minSpeedFactor = 0.30f;
 }

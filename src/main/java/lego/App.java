@@ -49,13 +49,16 @@ public class App {
             if (knapp == Button.ID_RIGHT) {
             } else if (knapp == Button.ID_LEFT) {
                 bil = new Bil(true); // true: kalkulerte hastigheter, false: hardkoda hastigheter.
-                start(mainSensor, correctionSensor, bil);
+                start(mainSensor, correctionSensor, bil, false);
             } else if (knapp == Button.ID_DOWN) {
                 mainSensor.printFargeID();
                 correctionSensor.printFargeID();
+            } else if (knapp == Button.ID_UP) {
+              bil = new Bil(true); // true: kalkulerte hastigheter, false: hardkoda hastigheter.
+              start(mainSensor, correctionSensor, bil, true);
             } else if (knapp == Button.ID_ENTER) {
                 bil = new Bil(false); // true: kalkulerte hastigheter, false: hardkoda hastigheter.
-                start(mainSensor, correctionSensor, bil);
+                start(mainSensor, correctionSensor, bil, false);
             }
         } while (true);
         /*
@@ -72,7 +75,7 @@ public class App {
      * @see Farge
      * @see Bil
      */
-    public static void start(Farge mainSensor, Farge correctionSensor, Bil bil) {
+    public static void start(Farge mainSensor, Farge correctionSensor, Bil bil, boolean testWhile) {
 
         /*
         * Flagg som indikerer at linja befinner seg mellom sensorene. Dette løser en del problemer
@@ -92,19 +95,33 @@ public class App {
                 if (bil.getState() == Direction.FORWARD || correctionSensor.hasLine()) {
                     if (correctionSensor.hasLine()) {
                       bil.setState(Direction.RIGHT);
-                      lineIsBetweenSensors = true;
                     } else if (!lineIsBetweenSensors) {
                       bil.setState(Direction.LEFT);
                     }
                 }
-            } else {
+            }
+
+            if (mainSensor.hasLine()) {
               bil.setState(Direction.FORWARD);
               lineIsBetweenSensors = false;
             }
 
-            bil.update(); // Gi nye instrukser til motorene.
+            if (mainSensor.lostLine()) {
+              //if (correctionSensor.lostLine() && bil.getState() == Direction.RIGHT) {
+              //  bil.setState(Direction.LEFT);
+              //}
 
-            while (mainSensor.hasLine()); // Vi trenger ikke sjekke noe så lenge vi ser linja.
+              if (correctionSensor.hasLine()) {
+                bil.setState(Direction.RIGHT);
+                lineIsBetweenSensors = true;
+              }
+            }
+
+            bil.update();
+
+            if (testWhile) {
+              while (mainSensor.hasLine());
+            }
         }
     }
 }
