@@ -49,16 +49,16 @@ public class App {
       if (knapp == Button.ID_RIGHT) {
       } else if (knapp == Button.ID_LEFT) {
         bil = new Bil(true); // true: kalkulerte hastigheter, false: hardkoda hastigheter.
-        start(mainSensor, correctionSensor, bil, false);
+        start(mainSensor, correctionSensor, bil);
       } else if (knapp == Button.ID_DOWN) {
         mainSensor.printFargeID();
         correctionSensor.printFargeID();
       } else if (knapp == Button.ID_UP) {
         bil = new Bil(false); // true: kalkulerte hastigheter, false: hardkoda hastigheter.
-        start(mainSensor, correctionSensor, bil, false);
+        start(mainSensor, correctionSensor, bil);
       } else if (knapp == Button.ID_ENTER) {
         bil = new Bil(false); // true: kalkulerte hastigheter, false: hardkoda hastigheter.
-        start(mainSensor, correctionSensor, bil, false);
+        start(mainSensor, correctionSensor, bil);
       }
     } while (true);
     /*
@@ -78,7 +78,7 @@ public class App {
    * @see Farge
    * @see Bil
    */
-  public static void start(Farge mainSensor, Farge correctionSensor, Bil bil, boolean testWhile) {
+  public static void start(Farge mainSensor, Farge correctionSensor, Bil bil) {
 
     /*
      * Flagg som indikerer at linja befinner seg mellom sensorene. Dette løser en

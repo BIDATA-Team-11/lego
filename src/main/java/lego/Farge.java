@@ -16,9 +16,6 @@ import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.robotics.SampleProvider;
 import lejos.hardware.port.Port;
 import lejos.robotics.Color;
-import lejos.hardware.BrickFinder;
-import lejos.hardware.Keys;
-import lejos.hardware.ev3.EV3;
 
 public class Farge {
   private EV3ColorSensor sensor;
