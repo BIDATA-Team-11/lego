@@ -35,6 +35,10 @@ import lejos.robotics.SampleProvider;
 import lejos.hardware.port.Port;
 import lejos.robotics.Color;
 
+/**
+ * Abstraksjon av fargesensor. Metoder som hasLine() etc forenkler logikken i
+ * andre klasser.
+ */
 public class Farge {
   private EV3ColorSensor sensor;
 

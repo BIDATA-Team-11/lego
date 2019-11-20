@@ -35,6 +35,9 @@ import lejos.hardware.BrickFinder;
 import lejos.hardware.port.Port;
 import lejos.hardware.Button;
 
+/**
+ * Hovedklasse. Starter programmet og tar seg av enkel styringslogikk.
+ */
 public class App {
   /**
    * Main-metode for klienten. Her får man valget om å printe ut de fargene
