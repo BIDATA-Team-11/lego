@@ -12,6 +12,10 @@
 
 package lego;
 
+/**
+ * Denne klassen inneholder flere alternative måter å sette hastigheter på
+ * motorene. Dette fordi vi ønsket å prøve å forandre en del ting underveis.
+ */
 public class Motorhastighet {
 
   /**
