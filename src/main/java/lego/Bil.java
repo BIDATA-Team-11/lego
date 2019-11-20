@@ -34,6 +34,9 @@ import lejos.robotics.MirrorMotor;
 import lejos.robotics.RegulatedMotor;
 import lejos.hardware.motor.Motor;
 
+/**
+ * Klasse som abstraherer bilen. Forenkler programmering og bedrer lesbarhet.
+ */
 public class Bil {
   private RegulatedMotor left;
   private RegulatedMotor right;
