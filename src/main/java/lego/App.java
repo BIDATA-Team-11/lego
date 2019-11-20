@@ -1,4 +1,4 @@
-// Copyright (c) 2019 Joakim Skogø Langvand (jlangvand@gmail.com)
+// Copyright (c) 2019 Several authors; see javadoc comment
 //
 // GNU GENERAL PUBLIC LICENSE
 //    Version 3, 29 June 2007
