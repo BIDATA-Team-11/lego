@@ -10,173 +10,185 @@
  * @version 1.1.0
  */
 
- package lego;
+package lego;
 
-import lejos.hardware.port.Port;
 import lejos.robotics.MirrorMotor;
 import lejos.robotics.RegulatedMotor;
 import lejos.hardware.motor.Motor;
 
 public class Bil {
-    private RegulatedMotor left;
-    private RegulatedMotor right;
+  private RegulatedMotor left;
+  private RegulatedMotor right;
 
+  /*
+   * Flagg som bestemmer om vi kalkulerer hastigheter eller bruker hardkoding.
+   */
+  private boolean actualMax;
+
+  private float maxSpeed;
+  private float midSpeed;
+  private float minSpeed;
+
+  private Direction state;
+
+  /*
+   * Flagg som bestemmer om vi bruker stegvis akselerasjon. Dette vil muligens
+   * begrense hunting.
+   */
+  private boolean accelrationTest;
+
+  /**
+   * Konstuerer en ny Bil.
+   *
+   * @param actualMax Boolean som bestemmer om vi skal bruke kalkulerte
+   *                  hastigheter.
+   */
+  public Bil(boolean actualMax) {
     /*
-    * Flagg som bestemmer om vi kalkulerer hastigheter eller bruker hardkoding.
-    */
-    private boolean actualMax;
-
-    private float maxSpeed;
-    private float midSpeed;
-    private float minSpeed;
-
-    private Direction state;
-    private Direction newState;
-
-    /*
-    * Flagg som bestemmer om vi bruker stegvis akselerasjon. Dette vil muligens begrense hunting.
-    */
-    private boolean accelrationTest;
-
-    /**
-     * Konstuerer en ny Bil.
-     * @param actualMax Boolean som bestemmer om vi skal bruke kalkulerte hastigheter.
+     * Inverterer motorene, siden de er montert motsatt av hva som er tiltenkt i
+     * APIet.
      */
-    public Bil(boolean actualMax) {
-        /*
-        * Inverterer motorene, siden de er montert motsatt av hva som er tiltenkt i APIet.
-        */
-        left = MirrorMotor.invertMotor(Motor.A);
-        right = MirrorMotor.invertMotor(Motor.C);
+    left = MirrorMotor.invertMotor(Motor.A);
+    right = MirrorMotor.invertMotor(Motor.C);
 
-        this.actualMax = actualMax; // Bruker kalkulerte verdier hvis satt til true.
-        state = Direction.FORWARD;
-        left.setAcceleration(Motorhastighet.maxAcc);
-        right.setAcceleration(Motorhastighet.maxAcc);
+    this.actualMax = actualMax; // Bruker kalkulerte verdier hvis satt til true.
+    state = Direction.FORWARD;
+    left.setAcceleration(Motorhastighet.maxAcc);
+    right.setAcceleration(Motorhastighet.maxAcc);
 
-        accelrationTest = false;
+    accelrationTest = false;
+  }
+
+  /**
+   * Rekalkulerer hastigheter. Denne er aktuell dersom actualMax ser satt til
+   * true.
+   */
+  private void recalculateSpeeds() {
+    if (actualMax) {
+      int maxLeft = (int) left.getMaxSpeed();
+      int maxRight = (int) right.getMaxSpeed();
+      this.maxSpeed = maxLeft < maxRight ? maxLeft : maxRight;
+      this.midSpeed = this.maxSpeed * Motorhastighet.midSpeedFactor;
+      this.minSpeed = this.maxSpeed * Motorhastighet.minSpeedFactor;
+    } else {
+      this.maxSpeed = Motorhastighet.max;
+      this.midSpeed = Motorhastighet.mid;
+      this.minSpeed = Motorhastighet.min;
+    }
+  }
+
+  /**
+   * Setter motorene til å gå framover. Full hastighet.
+   */
+  public void forward() {
+    this.recalculateSpeeds();
+
+    if (accelrationTest) {
+      left.setAcceleration(Motorhastighet.maxAcc);
+      right.setAcceleration(Motorhastighet.maxAcc);
     }
 
-    /**
-     * Rekalkulerer hastigheter. Denne er aktuell dersom actualMax ser satt til true.
-     */
-    private void recalculateSpeeds() {
-      if (actualMax) {
-        int maxLeft = (int)left.getMaxSpeed();
-        int maxRight = (int)right.getMaxSpeed();
-        this.maxSpeed = maxLeft < maxRight ? maxLeft : maxRight;
-        this.midSpeed = this.maxSpeed * Motorhastighet.midSpeedFactor;
-        this.minSpeed = this.maxSpeed * Motorhastighet.minSpeedFactor;
-      } else {
-        this.maxSpeed = Motorhastighet.max;
-        this.midSpeed = Motorhastighet.mid;
-        this.minSpeed = Motorhastighet.min;
-      }
+    this.left.setSpeed((int) maxSpeed);
+    this.right.setSpeed((int) maxSpeed);
+    this.left.forward();
+    this.right.forward();
+
+    System.out.println("FORWARD");
+  }
+
+  /**
+   * Setter motorene til å svinge mot venstre.
+   */
+  public void leftTurn() {
+    this.recalculateSpeeds();
+
+    if (accelrationTest) {
+      this.setAcceleration(Motorhastighet.minAcc);
     }
 
-    /**
-     * Setter motorene til å gå framover. Full hastighet.
-     */
-    public void forward() {
-      this.recalculateSpeeds();
+    this.left.setSpeed((int) minSpeed);
+    this.right.setSpeed((int) midSpeed);
+    this.left.forward();
+    this.right.forward();
 
-      if (accelrationTest) {
-          left.setAcceleration(Motorhastighet.maxAcc);
-          right.setAcceleration(Motorhastighet.maxAcc);
-      }
+    System.out.println("LEFT");
+  }
 
-      this.left.setSpeed((int)maxSpeed);
-      this.right.setSpeed((int)maxSpeed);
-      this.left.forward();
-      this.right.forward();
+  /**
+   * Setter motorene til å svinge mot høyre.
+   */
+  public void rightTurn() {
+    this.recalculateSpeeds();
 
-      System.out.println("FORWARD");
+    if (accelrationTest) {
+      this.setAcceleration(Motorhastighet.minAcc);
     }
 
-    /**
-     * Setter motorene til å svinge mot venstre.
-     */
-    public void leftTurn() {
-        this.recalculateSpeeds();
+    this.left.setSpeed((int) midSpeed);
+    this.right.setSpeed((int) minSpeed);
+    this.left.forward();
+    this.right.forward();
 
-        if (accelrationTest) {
-          this.setAcceleration(Motorhastighet.minAcc);
-        }
+    System.out.println("RIGHT");
+  }
 
-        this.left.setSpeed((int)minSpeed);
-        this.right.setSpeed((int)midSpeed);
-        this.left.forward();
-        this.right.forward();
+  /**
+   * Setter akselerasjon på begge motorer.
+   *
+   * @param accelration Akselerasjon
+   */
+  private void setAcceleration(int accelration) {
+    this.left.setAcceleration(accelration);
+    this.right.setAcceleration(accelration);
+  }
 
-        System.out.println("LEFT");
+  /**
+   * Sjekker status og oppdaterer motorer deretter.
+   */
+  public void update() {
+    if (this.state == Direction.FORWARD) {
+      this.forward();
+    } else if (this.state == Direction.LEFT) {
+      this.leftTurn();
+    } else if (this.state == Direction.RIGHT) {
+      this.rightTurn();
     }
+  }
 
-    /**
-     * Setter motorene til å svinge mot høyre.
-     */
-    public void rightTurn() {
-        this.recalculateSpeeds();
+  /**
+   * Setter status for objektet, ingen forandring før update() kalles.
+   *
+   * @param state Status i form av en Direction-verdi.
+   */
+  public void setState(Direction state) {
+    // TODO: Dersom vi bruker f.eks. state og nextState kan vi roe ned på API-calls
+    // til motorer.
+    // Avhengig av API er implementert i API kan bevegelsene kanskje bli mindre
+    // hakkete.
+    this.state = state;
+  }
 
-        if (accelrationTest) {
-          this.setAcceleration(Motorhastighet.minAcc);
-        }
+  /**
+   * Returnerer status til objektet. OBS: dette er ikke nødvendigvis aktiv status,
+   * dersom status er forandra siden forrige update().
+   *
+   * @return state Status som vil være aktiv etter neste update().
+   */
+  public Direction getState() {
+    return this.state;
+  }
 
-        this.left.setSpeed((int)midSpeed);
-        this.right.setSpeed((int)minSpeed);
-        this.left.forward();
-        this.right.forward();
+  /**
+   * Printer maks hastighet rapportert av EV3, multiplisert med faktorer oppgitt i
+   * konfigurasjonsfil, til display. Returnerer ingenting. Denne kan brukes til
+   * debugging, og er aktuell dersom det brukes kalkulerte hastigheter i stedet
+   * for hastigheter satt i konfigurasjonsfil.
+   */
+  public void printCalculatedSpeeds() {
+    this.recalculateSpeeds();
 
-        System.out.println("RIGHT");
-    }
-
-    /**
-     * Setter akselerasjon på begge motorer.
-     * @param accelration Akselerasjon
-     */
-    private void setAcceleration(int accelration) {
-      this.left.setAcceleration(accelration);
-      this.right.setAcceleration(accelration);
-    }
-
-    /**
-     * Sjekker status og oppdaterer motorer deretter.
-     */
-    public void update() {
-        if (this.state == Direction.FORWARD) {
-          this.forward();
-        } else if (this.state == Direction.LEFT) {
-          this.leftTurn();
-        } else if (this.state == Direction.RIGHT) {
-          this.rightTurn();
-        }
-    }
-
-    /**
-     * Setter status for objektet, ingen forandring før update() kalles.
-     * @param state Status i form av en Direction-verdi.
-     */
-    public void setState(Direction state) {
-      // TODO: Dersom vi bruker f.eks. state og nextState kan vi roe ned på API-calls til motorer.
-      //       Avhengig av API er implementert i API kan bevegelsene kanskje bli mindre hakkete.
-      this.state = state;
-    }
-
-    /**
-     * Returnerer status til objektet. OBS: dette er ikke nødvendigvis aktiv status, dersom status er forandra siden forrige update().
-     * @return state Status som vil være aktiv etter neste update().
-     */
-    public Direction getState() {
-      return this.state;
-    }
-
-    /**
-     * Printer maks hastighet rapportert av EV3, multiplisert med faktorer oppgitt i konfigurasjonsfil, til display. Returnerer ingenting. Denne kan brukes til debugging, og er aktuell dersom det brukes kalkulerte hastigheter i stedet for hastigheter satt i konfigurasjonsfil.
-     */
-    public void printCalculatedSpeeds() {
-      this.recalculateSpeeds();
-
-      System.out.println("Max: " + this.maxSpeed);
-      System.out.println("Mid: " + this.midSpeed);
-      System.out.println("Min: " + this.minSpeed);
-    }
+    System.out.println("Max: " + this.maxSpeed);
+    System.out.println("Mid: " + this.midSpeed);
+    System.out.println("Min: " + this.minSpeed);
+  }
 }
