@@ -15,6 +15,8 @@ plugins {
 
     // LejOS
     id "com.github.bdeneuter.mindstorms.ev3" version "1.2.3"
+
+    id 'maven'
 }
 
 sourceCompatibility = 1.7
@@ -58,4 +60,34 @@ mindstorms {
 
 task myJavadocs(type: Javadoc) {
    source = sourceSets.main.allJava
+ }
+
+ task sourcesJar(type: Jar, dependsOn: classes) {
+     classifier = 'sources'
+     from sourceSets.main.allSource
+ }
+
+ task javadocJar(type: Jar, dependsOn: javadoc) {
+     classifier = 'javadoc'
+     from javadoc.destinationDir
+ }
+
+ artifacts {
+     archives sourcesJar
+     archives javadocJar
+ }
+
+ // To specify a license in the pom:
+ install {
+   repositories.mavenInstaller {
+     pom.project {
+       licenses {
+         license {
+           name 'GNU General Public License, Version 3'
+           url 'http://www.gnu.org/licenses/'
+           distribution 'repo'
+         }
+       }
+     }
+   }
  }
