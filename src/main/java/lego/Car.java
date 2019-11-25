@@ -70,15 +70,15 @@ public class Car {
      * Inverterer motorene, siden de er montert motsatt av hva som er tiltenkt i
      * APIet.
      */
-    // left = MirrorMotor.invertMotor(Motor.B);
-    // right = MirrorMotor.invertMotor(Motor.C);
+    left = MirrorMotor.invertMotor(Motor.B);
+    right = MirrorMotor.invertMotor(Motor.C);
 
     // Wheel wheel1 = WheeledChassis.modelWheel(Motor.B, 3.0).offset(-8.6);
     // Wheel wheel2 = WheeledChassis.modelWheel(Motor.C, 3.0).offset(8.6);
     // Chassis chassis = (Chassis) new WheeledChassis(new Wheel[] { wheel1, wheel2
     // }, WheeledChassis.TYPE_DIFFERENTIAL);
     // this.pilot = new MovePilot(chassis);
-    this.pilot = new MovePilot(3.0, 8.6 * 2, Motor.B, Motor.C);
+    this.pilot = new MovePilot(3.0, 8.6 * 2, left, right);
 
     // Set linear speed to EV3s reported max speed. Alkaline batteries will provide
     // higher potential speeds.
