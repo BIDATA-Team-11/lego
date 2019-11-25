@@ -62,24 +62,24 @@ public class App {
     System.out.println("Enter:  Start");
     System.out.println("Opp:  Hardkoda");
 
-    Car bil;
+    Car car;
 
     do {
       int knapp = Button.waitForAnyPress();
 
       if (knapp == Button.ID_RIGHT) {
       } else if (knapp == Button.ID_LEFT) {
-        bil = new Car(true); // true: kalkulerte hastigheter, false: hardkoda hastigheter.
-        start(mainSensor, correctionSensor, bil);
+        car = new Car(true); // true: kalkulerte hastigheter, false: hardkoda hastigheter.
+        start(mainSensor, correctionSensor, car);
       } else if (knapp == Button.ID_DOWN) {
         mainSensor.printColorID();
         correctionSensor.printColorID();
       } else if (knapp == Button.ID_UP) {
-        bil = new Car(false); // true: kalkulerte hastigheter, false: hardkoda hastigheter.
-        start(mainSensor, correctionSensor, bil);
+        car = new Car(false); // true: kalkulerte hastigheter, false: hardkoda hastigheter.
+        start(mainSensor, correctionSensor, car);
       } else if (knapp == Button.ID_ENTER) {
-        bil = new Car(false); // true: kalkulerte hastigheter, false: hardkoda hastigheter.
-        start(mainSensor, correctionSensor, bil);
+        car = new Car(false); // true: kalkulerte hastigheter, false: hardkoda hastigheter.
+        start(mainSensor, correctionSensor, car);
       }
     } while (true);
     /*
@@ -95,11 +95,11 @@ public class App {
    * @param mainSensor       Hovedfargesensor. Står midt på fronten på roboten..
    * @param correctionSensor Korrigeringssensor. Står til høyre for
    *                         hovedfargesensor.
-   * @param bil              Hjelpeklasse for motorene.
+   * @param car              Hjelpeklasse for motorene.
    * @see ColorSensor
    * @see Car
    */
-  public static void start(ColorSensor mainSensor, ColorSensor correctionSensor, Car bil) {
+  public static void start(ColorSensor mainSensor, ColorSensor correctionSensor, Car car) {
 
     /*
      * Flagg som indikerer at linja befinner seg mellom sensorene. Dette løser en
@@ -118,28 +118,28 @@ public class App {
      */
     while (true) {
       if (mainSensor.lostLine()) {
-        if (bil.getState() == Direction.FORWARD || correctionSensor.hasLine()) {
+        if (car.getState() == Direction.FORWARD || correctionSensor.hasLine()) {
           if (correctionSensor.hasLine()) {
-            bil.setState(Direction.RIGHT);
+            car.setState(Direction.RIGHT);
           } else if (!lineIsBetweenSensors) {
-            bil.setState(Direction.LEFT);
+            car.setState(Direction.LEFT);
           }
         }
       }
 
       if (mainSensor.hasLine()) {
-        bil.setState(Direction.FORWARD);
+        car.setState(Direction.FORWARD);
         lineIsBetweenSensors = false;
       }
 
       if (mainSensor.lostLine()) {
         if (correctionSensor.hasLine()) {
-          bil.setState(Direction.RIGHT);
+          car.setState(Direction.RIGHT);
           lineIsBetweenSensors = true;
         }
       }
 
-      bil.update();
+      car.update();
     }
   }
 }
