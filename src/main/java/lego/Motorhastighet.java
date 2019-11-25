@@ -44,9 +44,9 @@ public class Motorhastighet {
   /**
    * Middels hastighet (hastighet på "ytterhjul" i svinger)
    */
-  public final static int mid = 600;
+  public final static int mid = 700;
 
-  public final static int minright = 200;
+  public final static int minright = 300;
 
   /**
    * Lav hastighet (hastighet på "innerhjul" i svinger)
