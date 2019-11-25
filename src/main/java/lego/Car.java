@@ -79,8 +79,8 @@ public class Car {
     left = MirrorMotor.invertMotor(Motor.A);
     right = MirrorMotor.invertMotor(Motor.C);
 
-    Wheel wheel1 = WheeledChassis.modelWheel(Motor.A, 3.0).offset(-70);
-    Wheel wheel2 = WheeledChassis.modelWheel(Motor.D, 3.0).offset(70);
+    Wheel wheel1 = WheeledChassis.modelWheel(Motor.A, 3.0).offset(-8.6);
+    Wheel wheel2 = WheeledChassis.modelWheel(Motor.D, 3.0).offset(8.6);
     Chassis chassis = new WheeledChassis(new Wheel[] { wheel1, wheel2 }, WheeledChassis.TYPE_DIFFERENTIAL);
 
     this.actualMax = actualMax; // Bruker kalkulerte verdier hvis satt til true.
