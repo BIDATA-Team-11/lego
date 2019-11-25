@@ -16,9 +16,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-// offset 8.6
-// diam 3.0
-
 /**
  * Klasse som beskriver motorene og inneholder alle metoder for disse.
  * @author Stian Selvåg
@@ -63,12 +60,7 @@ public class Car {
   private float minSpeed;
 
   private Direction state;
-
-  /*
-   * Flagg som bestemmer om vi bruker stegvis akselerasjon. Dette vil muligens
-   * begrense hunting.
-   */
-  private boolean accelrationTest;
+  private Direction lastState;
 
   /**
    * Konstuerer en ny Car.
@@ -88,14 +80,19 @@ public class Car {
     Wheel wheel2 = WheeledChassis.modelWheel(right, 3.0).offset(8.6);
     Chassis chassis = new WheeledChassis(new Wheel[] { wheel1, wheel2 }, WheeledChassis.TYPE_DIFFERENTIAL);
     this.pilot = new MovePilot(chassis);
+
+    // Set linear speed to EV3s reported max speed. Alkaline batteries will provide
+    // higher potential speeds.
     pilot.setLinearSpeed(pilot.getMaxLinearSpeed());
 
     this.actualMax = actualMax; // Bruker kalkulerte verdier hvis satt til true.
-    state = Direction.FORWARD;
+
+    // Initialise direction states.
+    this.state = Direction.FORWARD;
+    this.lastState = state;
+
     left.setAcceleration(SpeedSettings.maxAcc);
     right.setAcceleration(SpeedSettings.maxAcc);
-
-    accelrationTest = false;
   }
 
   /**
@@ -120,19 +117,7 @@ public class Car {
    * Setter motorene til å gå framover. Full hastighet.
    */
   public void forward() {
-    // this.recalculateSpeeds();
-
-    // if (accelrationTest) {
-    // left.setAcceleration(SpeedSettings.maxAcc);
-    // right.setAcceleration(SpeedSettings.maxAcc);
-    // }
-
     this.pilot.forward();
-
-    /*
-     * this.left.setSpeed((int) maxSpeed); this.right.setSpeed((int) maxSpeed);
-     * this.left.forward(); this.right.forward();
-     */
 
     System.out.println("FORWARD");
   }
@@ -156,25 +141,19 @@ public class Car {
   }
 
   /**
-   * Setter akselerasjon på begge motorer.
-   *
-   * @param accelration Akselerasjon
-   */
-  private void setAcceleration(int accelration) {
-    this.left.setAcceleration(accelration);
-    this.right.setAcceleration(accelration);
-  }
-
-  /**
    * Sjekker status og oppdaterer motorer deretter.
    */
   public void update() {
-    if (this.state == Direction.FORWARD) {
-      this.forward();
-    } else if (this.state == Direction.LEFT) {
-      this.leftTurn();
-    } else if (this.state == Direction.RIGHT) {
-      this.rightTurn();
+    if (this.lastState != this.state) {
+      if (this.state == Direction.FORWARD) {
+        this.forward();
+      } else if (this.state == Direction.LEFT) {
+        this.leftTurn();
+      } else if (this.state == Direction.RIGHT) {
+        this.rightTurn();
+      }
+
+      this.lastState = this.state;
     }
   }
 
