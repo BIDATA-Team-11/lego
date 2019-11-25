@@ -34,7 +34,6 @@ import lejos.robotics.MirrorMotor;
 import lejos.robotics.RegulatedMotor;
 import lejos.hardware.motor.Motor;
 import lejos.robotics.navigation.MovePilot;
-import lejos.robotics.chassis.Chassis;
 import lejos.robotics.chassis.WheeledChassis;
 import lejos.robotics.chassis.Wheel;
 
@@ -78,7 +77,7 @@ public class Car {
 
     Wheel wheel1 = WheeledChassis.modelWheel(left, 3.0).offset(-8.6);
     Wheel wheel2 = WheeledChassis.modelWheel(right, 3.0).offset(8.6);
-    Chassis chassis = new WheeledChassis(new Wheel[] { wheel1, wheel2 }, WheeledChassis.TYPE_DIFFERENTIAL);
+    WheeledChassis chassis = new WheeledChassis(new Wheel[] { wheel1, wheel2 }, WheeledChassis.TYPE_DIFFERENTIAL);
     this.pilot = new MovePilot(chassis);
 
     // Set linear speed to EV3s reported max speed. Alkaline batteries will provide
