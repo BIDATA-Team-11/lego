@@ -34,10 +34,6 @@ import lejos.robotics.MirrorMotor;
 import lejos.robotics.RegulatedMotor;
 import lejos.hardware.motor.Motor;
 import lejos.robotics.navigation.MovePilot;
-import lejos.robotics.*;
-import lejos.robotics.chassis.*;
-import lejos.robotics.chassis.WheeledChassis;
-import lejos.robotics.chassis.Wheel;
 
 /**
  * Klasse som abstraherer bilen. Forenkler programmering og bedrer lesbarhet.
@@ -77,10 +73,12 @@ public class Car {
     // left = MirrorMotor.invertMotor(Motor.B);
     // right = MirrorMotor.invertMotor(Motor.C);
 
-    Wheel wheel1 = WheeledChassis.modelWheel(Motor.B, 3.0).offset(-8.6);
-    Wheel wheel2 = WheeledChassis.modelWheel(Motor.C, 3.0).offset(8.6);
-    Chassis chassis = new WheeledChassis(new Wheel[] { wheel1, wheel2 }, WheeledChassis.TYPE_DIFFERENTIAL);
-    this.pilot = new MovePilot(chassis);
+    // Wheel wheel1 = WheeledChassis.modelWheel(Motor.B, 3.0).offset(-8.6);
+    // Wheel wheel2 = WheeledChassis.modelWheel(Motor.C, 3.0).offset(8.6);
+    // Chassis chassis = (Chassis) new WheeledChassis(new Wheel[] { wheel1, wheel2
+    // }, WheeledChassis.TYPE_DIFFERENTIAL);
+    // this.pilot = new MovePilot(chassis);
+    this.pilot = new MovePilot(3.0, 8.6 * 2, Motor.B, Motor.C);
 
     // Set linear speed to EV3s reported max speed. Alkaline batteries will provide
     // higher potential speeds.
