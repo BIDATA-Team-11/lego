@@ -146,7 +146,7 @@ public class Bil {
     }
 
     this.left.setSpeed((int) midSpeed);
-    this.right.setSpeed((int) minSpeed);
+    this.right.setSpeed((int) Motorhastighet.midright);
     this.left.forward();
     this.right.forward();
 
