@@ -46,12 +46,12 @@ public class Motorhastighet {
    */
   public final static int mid = 600;
 
-  public final static int midright = 500;
+  public final static int minright = 200;
 
   /**
    * Lav hastighet (hastighet på "innerhjul" i svinger)
    */
-  public final static int min = 350;
+  public final static int min = 200;
 
   /*
    * Konstantene nedenfor brukes dersom flagget accelrationTest settes i Bil.java.
