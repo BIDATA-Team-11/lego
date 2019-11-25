@@ -78,7 +78,7 @@ public class Car {
     // Chassis chassis = (Chassis) new WheeledChassis(new Wheel[] { wheel1, wheel2
     // }, WheeledChassis.TYPE_DIFFERENTIAL);
     // this.pilot = new MovePilot(chassis);
-    this.pilot = new MovePilot(3.0, 8.6 * 2, left, right);
+    this.pilot = new MovePilot(3.0, 8.6 * 2, Motor.B, Motor.C);
 
     // Set linear speed to EV3s reported max speed. Alkaline batteries will provide
     // higher potential speeds.
