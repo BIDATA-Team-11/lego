@@ -16,6 +16,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+// offset 8.6
+// diam 3.0
+
 /**
  * Klasse som beskriver motorene og inneholder alle metoder for disse.
  * @author Stian Selvåg
@@ -33,6 +36,10 @@ package lego;
 import lejos.robotics.MirrorMotor;
 import lejos.robotics.RegulatedMotor;
 import lejos.hardware.motor.Motor;
+import lejos.robotics.navigation.MovePilot;
+import lejos.robotics.chassis.Chassis;
+import lejos.robotics.chassis.WheeledChassis;
+import lejos.robotics.chassis.Wheel;
 
 /**
  * Klasse som abstraherer bilen. Forenkler programmering og bedrer lesbarhet.
@@ -72,6 +79,10 @@ public class Car {
     left = MirrorMotor.invertMotor(Motor.A);
     right = MirrorMotor.invertMotor(Motor.C);
 
+    Wheel wheel1 = WheeledChassis.modelWheel(Motor.A, 3.0).offset(-70);
+    Wheel wheel2 = WheeledChassis.modelWheel(Motor.D, 3.0).offset(70);
+    Chassis chassis = new WheeledChassis(new Wheel[] { wheel1, wheel2 }, WheeledChassis.TYPE_DIFFERENTIAL);
+
     this.actualMax = actualMax; // Bruker kalkulerte verdier hvis satt til true.
     state = Direction.FORWARD;
     left.setAcceleration(SpeedSettings.maxAcc);
@@ -109,10 +120,10 @@ public class Car {
       right.setAcceleration(SpeedSettings.maxAcc);
     }
 
-    this.left.setSpeed((int) maxSpeed);
-    this.right.setSpeed((int) maxSpeed);
-    this.left.forward();
-    this.right.forward();
+    /*
+     * this.left.setSpeed((int) maxSpeed); this.right.setSpeed((int) maxSpeed);
+     * this.left.forward(); this.right.forward();
+     */
 
     System.out.println("FORWARD");
   }
