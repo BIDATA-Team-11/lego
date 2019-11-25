@@ -74,11 +74,11 @@ public class Car {
      * Inverterer motorene, siden de er montert motsatt av hva som er tiltenkt i
      * APIet.
      */
-    left = MirrorMotor.invertMotor(Motor.B);
-    right = MirrorMotor.invertMotor(Motor.C);
+    // left = MirrorMotor.invertMotor(Motor.B);
+    // right = MirrorMotor.invertMotor(Motor.C);
 
-    Wheel wheel1 = WheeledChassis.modelWheel(left, 3.0).offset(-8.6);
-    Wheel wheel2 = WheeledChassis.modelWheel(right, 3.0).offset(8.6);
+    Wheel wheel1 = WheeledChassis.modelWheel(Motor.B, 3.0).offset(-8.6);
+    Wheel wheel2 = WheeledChassis.modelWheel(Motor.C, 3.0).offset(8.6);
     Chassis chassis = new WheeledChassis(new Wheel[] { wheel1, wheel2 }, WheeledChassis.TYPE_DIFFERENTIAL);
     this.pilot = new MovePilot(chassis);
 
