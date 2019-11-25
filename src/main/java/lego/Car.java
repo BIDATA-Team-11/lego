@@ -74,7 +74,7 @@ public class Car {
      * Inverterer motorene, siden de er montert motsatt av hva som er tiltenkt i
      * APIet.
      */
-    left = MirrorMotor.invertMotor(Motor.A);
+    left = MirrorMotor.invertMotor(Motor.B);
     right = MirrorMotor.invertMotor(Motor.C);
 
     Wheel wheel1 = WheeledChassis.modelWheel(left, 3.0).offset(-8.6);
