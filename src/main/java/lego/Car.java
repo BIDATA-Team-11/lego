@@ -48,6 +48,11 @@ public class Car {
   private RegulatedMotor left;
   private RegulatedMotor right;
 
+  private MovePilot pilot;
+
+  private int leftRadius = 20;
+  private int rightRadius = -60;
+
   /*
    * Flagg som bestemmer om vi kalkulerer hastigheter eller bruker hardkoding.
    */
@@ -82,7 +87,8 @@ public class Car {
     Wheel wheel1 = WheeledChassis.modelWheel(left, 3.0).offset(-8.6);
     Wheel wheel2 = WheeledChassis.modelWheel(right, 3.0).offset(8.6);
     Chassis chassis = new WheeledChassis(new Wheel[] { wheel1, wheel2 }, WheeledChassis.TYPE_DIFFERENTIAL);
-    MovePilot pilot = new MovePilot(chassis);
+    this.pilot = new MovePilot(chassis);
+    pilot.setLinearSpeed(pilot.getMaxLinearSpeed());
 
     this.actualMax = actualMax; // Bruker kalkulerte verdier hvis satt til true.
     state = Direction.FORWARD;
@@ -114,12 +120,14 @@ public class Car {
    * Setter motorene til å gå framover. Full hastighet.
    */
   public void forward() {
-    this.recalculateSpeeds();
+    // this.recalculateSpeeds();
 
-    if (accelrationTest) {
-      left.setAcceleration(SpeedSettings.maxAcc);
-      right.setAcceleration(SpeedSettings.maxAcc);
-    }
+    // if (accelrationTest) {
+    // left.setAcceleration(SpeedSettings.maxAcc);
+    // right.setAcceleration(SpeedSettings.maxAcc);
+    // }
+
+    this.pilot.forward();
 
     /*
      * this.left.setSpeed((int) maxSpeed); this.right.setSpeed((int) maxSpeed);
@@ -133,16 +141,7 @@ public class Car {
    * Setter motorene til å svinge mot venstre.
    */
   public void leftTurn() {
-    this.recalculateSpeeds();
-
-    if (accelrationTest) {
-      this.setAcceleration(SpeedSettings.minAcc);
-    }
-
-    this.left.setSpeed((int) minSpeed);
-    this.right.setSpeed((int) midSpeed);
-    this.left.forward();
-    this.right.forward();
+    this.pilot.arcForward(leftRadius);
 
     System.out.println("LEFT");
   }
@@ -151,16 +150,7 @@ public class Car {
    * Setter motorene til å svinge mot høyre.
    */
   public void rightTurn() {
-    this.recalculateSpeeds();
-
-    if (accelrationTest) {
-      this.setAcceleration(SpeedSettings.minAcc);
-    }
-
-    this.left.setSpeed((int) midSpeed);
-    this.right.setSpeed((int) minSpeed);
-    this.left.forward();
-    this.right.forward();
+    this.pilot.arcForward(rightRadius);
 
     System.out.println("RIGHT");
   }
