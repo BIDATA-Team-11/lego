@@ -52,7 +52,7 @@ public class SpeedSettings {
   public final static int min = 250;
 
   /*
-   * Konstantene nedenfor brukes dersom flagget accelrationTest settes i Bil.java.
+   * Konstantene nedenfor brukes dersom flagget accelrationTest settes i Car.java.
    *
    * maxAcc brukes når roboten går fra svinghastighet og opp. minAcc brukes når
    * roboten går fra topphastighet ned til svinghastighet.

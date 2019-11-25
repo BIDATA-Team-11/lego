@@ -59,12 +59,12 @@ public class Car {
   private boolean accelrationTest;
 
   /**
-   * Konstuerer en ny Bil.
+   * Konstuerer en ny Car.
    *
    * @param actualMax Boolean som bestemmer om vi skal bruke kalkulerte
    *                  hastigheter.
    */
-  public Bil(boolean actualMax) {
+  public Car(boolean actualMax) {
     /*
      * Inverterer motorene, siden de er montert motsatt av hva som er tiltenkt i
      * APIet.
@@ -74,8 +74,8 @@ public class Car {
 
     this.actualMax = actualMax; // Bruker kalkulerte verdier hvis satt til true.
     state = Direction.FORWARD;
-    left.setAcceleration(Motorhastighet.maxAcc);
-    right.setAcceleration(Motorhastighet.maxAcc);
+    left.setAcceleration(SpeedSettings.maxAcc);
+    right.setAcceleration(SpeedSettings.maxAcc);
 
     accelrationTest = false;
   }
@@ -89,12 +89,12 @@ public class Car {
       int maxLeft = (int) left.getMaxSpeed();
       int maxRight = (int) right.getMaxSpeed();
       this.maxSpeed = maxLeft < maxRight ? maxLeft : maxRight;
-      this.midSpeed = this.maxSpeed * Motorhastighet.midSpeedFactor;
-      this.minSpeed = this.maxSpeed * Motorhastighet.minSpeedFactor;
+      this.midSpeed = this.maxSpeed * SpeedSettings.midSpeedFactor;
+      this.minSpeed = this.maxSpeed * SpeedSettings.minSpeedFactor;
     } else {
-      this.maxSpeed = Motorhastighet.max;
-      this.midSpeed = Motorhastighet.mid;
-      this.minSpeed = Motorhastighet.min;
+      this.maxSpeed = SpeedSettings.max;
+      this.midSpeed = SpeedSettings.mid;
+      this.minSpeed = SpeedSettings.min;
     }
   }
 
@@ -105,8 +105,8 @@ public class Car {
     this.recalculateSpeeds();
 
     if (accelrationTest) {
-      left.setAcceleration(Motorhastighet.maxAcc);
-      right.setAcceleration(Motorhastighet.maxAcc);
+      left.setAcceleration(SpeedSettings.maxAcc);
+      right.setAcceleration(SpeedSettings.maxAcc);
     }
 
     this.left.setSpeed((int) maxSpeed);
@@ -124,7 +124,7 @@ public class Car {
     this.recalculateSpeeds();
 
     if (accelrationTest) {
-      this.setAcceleration(Motorhastighet.minAcc);
+      this.setAcceleration(SpeedSettings.minAcc);
     }
 
     this.left.setSpeed((int) minSpeed);
@@ -142,7 +142,7 @@ public class Car {
     this.recalculateSpeeds();
 
     if (accelrationTest) {
-      this.setAcceleration(Motorhastighet.minAcc);
+      this.setAcceleration(SpeedSettings.minAcc);
     }
 
     this.left.setSpeed((int) midSpeed);

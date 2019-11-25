@@ -54,31 +54,31 @@ public class App {
      */
     Port mainSensorPort = brick.getPort("S2");
     Port correctionSensorPort = brick.getPort("S4");
-    Farge mainSensor = new Farge(mainSensorPort);
-    Farge correctionSensor = new Farge(correctionSensorPort);
+    ColorSensor mainSensor = new ColorSensor(mainSensorPort);
+    ColorSensor correctionSensor = new ColorSensor(correctionSensorPort);
 
     System.out.println("1.1.0-awesomebot");
     System.out.println("Ned:    Les farge");
     System.out.println("Enter:  Start");
     System.out.println("Opp:  Hardkoda");
 
-    Bil bil;
+    Car bil;
 
     do {
       int knapp = Button.waitForAnyPress();
 
       if (knapp == Button.ID_RIGHT) {
       } else if (knapp == Button.ID_LEFT) {
-        bil = new Bil(true); // true: kalkulerte hastigheter, false: hardkoda hastigheter.
+        bil = new Car(true); // true: kalkulerte hastigheter, false: hardkoda hastigheter.
         start(mainSensor, correctionSensor, bil);
       } else if (knapp == Button.ID_DOWN) {
-        mainSensor.printFargeID();
-        correctionSensor.printFargeID();
+        mainSensor.printColorID();
+        correctionSensor.printColorID();
       } else if (knapp == Button.ID_UP) {
-        bil = new Bil(false); // true: kalkulerte hastigheter, false: hardkoda hastigheter.
+        bil = new Car(false); // true: kalkulerte hastigheter, false: hardkoda hastigheter.
         start(mainSensor, correctionSensor, bil);
       } else if (knapp == Button.ID_ENTER) {
-        bil = new Bil(false); // true: kalkulerte hastigheter, false: hardkoda hastigheter.
+        bil = new Car(false); // true: kalkulerte hastigheter, false: hardkoda hastigheter.
         start(mainSensor, correctionSensor, bil);
       }
     } while (true);
@@ -96,10 +96,10 @@ public class App {
    * @param correctionSensor Korrigeringssensor. Står til høyre for
    *                         hovedfargesensor.
    * @param bil              Hjelpeklasse for motorene.
-   * @see Farge
-   * @see Bil
+   * @see ColorSensor
+   * @see Car
    */
-  public static void start(Farge mainSensor, Farge correctionSensor, Bil bil) {
+  public static void start(ColorSensor mainSensor, ColorSensor correctionSensor, Car bil) {
 
     /*
      * Flagg som indikerer at linja befinner seg mellom sensorene. Dette løser en

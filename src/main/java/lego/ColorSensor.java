@@ -47,7 +47,7 @@ public class ColorSensor {
    *
    * @param port Fysisk port på EV3-maskinen.
    */
-  public Farge(Port port) {
+  public ColorSensor(Port port) {
     sensor = new EV3ColorSensor(port);
   }
 
@@ -55,7 +55,7 @@ public class ColorSensor {
    * Testmetode. Printer fargeverdi. TODO: Kanskje fjerne denne. Da kan vi ta bort
    * mange imports. Må da også fjerne call fra App.java.
    */
-  public void printFargeID() {
+  public void printColorID() {
     SampleProvider colorSample = this.sensor.getColorIDMode();
     float[] sample = new float[colorSample.sampleSize()];
     colorSample.fetchSample(sample, 0);
