@@ -82,6 +82,7 @@ public class Car {
     Wheel wheel1 = WheeledChassis.modelWheel(left, 3.0).offset(-8.6);
     Wheel wheel2 = WheeledChassis.modelWheel(right, 3.0).offset(8.6);
     Chassis chassis = new WheeledChassis(new Wheel[] { wheel1, wheel2 }, WheeledChassis.TYPE_DIFFERENTIAL);
+    MovePilot pilot = new MovePilot(chassis);
 
     this.actualMax = actualMax; // Bruker kalkulerte verdier hvis satt til true.
     state = Direction.FORWARD;
